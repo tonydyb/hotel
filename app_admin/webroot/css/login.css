@@ -1,0 +1,14 @@
+@charset "UTF-8";
+
+@import "base.css";
+
+div#title h2 {
+	margin : 100px auto 20px auto;
+	color : #fff;
+	padding : 5px;
+	font-weight : bold;
+	background : darkturquoise;
+	width : 500px;
+}
+
+
