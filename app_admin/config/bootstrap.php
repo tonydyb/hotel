@@ -47,6 +47,6 @@ $viewPaths = array( APP_DIR.DS.'views'.DS, CAKE_CORE_INCLUDE_PATH.DS.'app'.DS.'v
 $controllerPaths = array( APP_DIR.DS.'controllers'.DS, CAKE_CORE_INCLUDE_PATH.DS.'app'.DS.'controllers'.DS);
 $helperPaths = array( CAKE_CORE_INCLUDE_PATH.DS.'view'.DS.'helpers'.DS );
 
-config('app_const', 'sql_const', 'validate_const');
+config('app_const', 'sql_const', 'validate_const', 'email_const', 'system_const');
 
 ?>

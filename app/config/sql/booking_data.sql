@@ -20,14 +20,6 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 --
 
 --
--- テーブルのデータをダンプしています `admin_sessions`
---
-
-INSERT INTO `admin_sessions` (`id`, `data`, `expires`) VALUES
-('873d72ce047667271f7f80c24cca7330', 'Config|a:3:{s:9:"userAgent";s:32:"5286d3ace3f42517f00f27a4fc383884";s:4:"time";i:1273148735;s:7:"timeout";i:10;}view_iso|s:2:"ja";auth|a:1:{i:0;a:2:{s:9:"AdminUser";a:10:{s:2:"id";s:1:"1";s:7:"account";s:1:"t";s:8:"password";s:1:"t";s:4:"name";s:1:"t";s:5:"email";s:6:"t@t.cc";s:3:"tel";s:0:"";s:11:"language_id";s:2:"38";s:7:"created";s:19:"0000-00-00 00:00:00";s:7:"updated";s:19:"0000-00-00 00:00:00";s:7:"deleted";N;}s:7:"Request";a:0:{}}}area_id|s:1:"1";Message|a:0:{}', 1273148735),
-('ec15da25c21dc8696f0f111509f18502', 'Config|a:3:{s:9:"userAgent";s:32:"5286d3ace3f42517f00f27a4fc383884";s:4:"time";i:1273155645;s:7:"timeout";i:10;}view_iso|s:2:"en";', 1273155653);
-
---
 -- テーブルのデータをダンプしています `admin_user`
 --
 
@@ -4595,6 +4587,11 @@ INSERT INTO `area_link_country` (`id`, `area_id`, `country_id`, `created`, `upda
 -- テーブルのデータをダンプしています `carrier_type`
 --
 
+INSERT INTO `carrier_type` (`id`, `code`, `name`, `created`, `updated`, `deleted`) VALUES
+(1, 'pc', 'pc', '2010-04-14 17:31:00', '2010-04-14 17:31:00', NULL),
+(2, 'docomo', 'docomo', '2010-04-14 17:31:00', '2010-04-14 17:31:00', NULL),
+(3, 'au', 'au', '2010-04-14 17:31:00', '2010-04-14 17:31:00', NULL),
+(4, 'softbank', 'softbank', '2010-04-14 17:31:00', '2010-04-14 17:31:00', NULL);
 
 --
 -- テーブルのデータをダンプしています `city`
@@ -14402,11 +14399,18 @@ INSERT INTO `country_language` (`id`, `language_id`, `country_id`, `name`, `name
 --
 -- テーブルのデータをダンプしています `discount_item`
 --
-
+INSERT INTO `discount_item` (`id`, `code`, `created`, `updated`, `deleted`) VALUES
+(1, 'All', '2010-04-01 00:00:00', '2010-04-01 00:00:00', NULL),
+(2, 'Agent', '2010-04-01 00:00:00', '2010-04-01 00:00:00', NULL),
+(3, 'Hotel', '2010-04-01 00:00:00', '2010-04-01 00:00:00', NULL),
+(4, 'HotelRoom', '2010-04-01 00:00:00', '2010-04-01 00:00:00', NULL);
 
 --
 -- テーブルのデータをダンプしています `discount_type`
 --
+INSERT INTO `discount_type` (`id`, `code`, `created`, `updated`, `deleted`) VALUES
+(1, 'Price', '2010-04-01 00:00:00', '2010-04-01 00:00:00', NULL),
+(2, 'Percent', '2010-04-01 00:00:00', '2010-04-01 00:00:00', NULL);
 
 
 --

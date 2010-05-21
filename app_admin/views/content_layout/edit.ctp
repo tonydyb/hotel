@@ -1,5 +1,5 @@
 <?php
-	echo $javascript->link('content/content_layout_edit');
+	echo $javascript->link('content_layout/content_layout_edit');
 ?>
 
 <div id="top">
@@ -41,6 +41,10 @@
 			<th style="text-align:left"><label><?php __('Name');?></label></th>
 			<td>
 			<?php
+				echo $form->hidden('oldLanguageId', array('value' => $this->data['ContentLayout']['language_id']));
+				echo $form->hidden('oldCarrierTypeId', array('value' => $this->data['ContentLayout']['carrier_type_id']));
+				echo $form->hidden('oldAlias', array('value' => $this->data['ContentLayout']['alias']));
+
 				echo $form->input('id', array(
 					'label' => __(''),
 					'div'=>'formfield',

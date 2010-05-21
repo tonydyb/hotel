@@ -35,31 +35,23 @@
 			<th class="actions"><?php __('Edit');?></th>
 			<th class="actions"><?php __('Edit Name');?></th>
 		</tr>
-		<?php foreach ($country as $country): ?>
-			<tr>
-				<td>
-					<?php echo $country['Country']['id']; ?>
-				</td>
-				<td>
-					<?php echo $country['Country']['iso_code_n']; ?>
-				</td>
-				<td>
-					<?php echo $country['Country']['iso_code_a2']; ?>
-				</td>
-				<td>
-					<?php echo $country['Country']['iso_code_a3']; ?>
-				</td>
-				<td>
-					<?php echo $country['CountryLanguage']['name']; ?>
-				</td>
-				<td class="actions">
-					<?php echo $html->link(__('Edit', true), array('action' => 'edit', $country['Country']['id'])); ?>
-				</td>
-				<td class="actions">
-					<?php echo $html->link(__('Edit Name', true), array('action' => 'editName', $country['Country']['id'])); ?>
-				</td>
-			</tr>
-		<?php endforeach; ?>
+		<?php
+			foreach ($country as $country) {
+				echo $html->tableCells(
+					array(
+						array(
+							$country['Country']['id'],
+							$country['Country']['iso_code_n'],
+							$country['Country']['iso_code_a2'],
+							$country['Country']['iso_code_a3'],
+							$country['CountryLanguage']['name'],
+							array($html->link(__('Edit', true), array('action' => 'edit', $country['Country']['id'])), aa('class', 'actions')),
+							array($html->link(__('Edit Name', true), array('action' => 'editName', $country['Country']['id'])), aa('class', 'actions'))
+						)
+					)
+				);
+			}
+		?>
 		</table>
 	</div>
 

@@ -58,7 +58,7 @@ class LoginController extends AppController {
 	 */
 	function logoff() {
 		$this->Session->delete('auth');
-		$this->redirect('/app_admin/login');
+		$this->redirect('/login');
         exit;
 	}
 

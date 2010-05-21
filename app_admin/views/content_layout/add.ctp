@@ -1,5 +1,5 @@
 <?php
-	echo $javascript->link('content/content_layout_add');
+	echo $javascript->link('content_layout/content_layout_add');
 ?>
 <div id="top">
 	<div id="header">
@@ -19,7 +19,7 @@
 		<tr>
 			<th style="text-align:left"><label><?php __('Language');?></label></th>
 			<td>
-				<select style="width:200px" id="LanguageId" name="LanguageId">
+				<select id="LanguageId" name="LanguageId">
 					<?php foreach ($languages as $language) {?>
 						<option value="<?php echo $language['language']['id']; ?>" <?php if (isset($_REQUEST["LanguageId"])) { echo $language['language']['id']==$_REQUEST["LanguageId"]?"selected='selected'":""; } ?>><?php echo ($language['language_language']['name']=='' ? 'no name':$language['language_language']['name']); ?></option>
 					<?php } ?>
@@ -29,7 +29,7 @@
 		<tr>
 			<th style="text-align:left"><label><?php __('CarrierType');?></label></th>
 			<td>
-				<select style="width:50px" id="CarrierTypeId" name="CarrierTypeId">
+				<select id="CarrierTypeId" name="CarrierTypeId">
 					<?php foreach ($carrierTypes as $carrierType) {?>
 						<option value="<?php echo $carrierType['CarrierType']['id']; ?>" <?php if (isset($_REQUEST["CarrierTypeId"])) { echo $carrierType['CarrierType']['id']==$_REQUEST["CarrierTypeId"]?"selected='selected'":""; } ?>><?php echo ($carrierType['CarrierType']['name']); ?></option>
 					<?php } ?>
@@ -87,9 +87,35 @@
 			<th style="text-align:left"><label><?php __('Content');?></label></th>
 			<td>
 			<?php
+				$str = "
+<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">
+\n<html xmlns=\"http://www.w3.org/1999/xhtml\">
+\n<head>
+<?php echo \$html->charset(); ?>
+\n<meta http-equiv=\"Content-style-Type\" content=\"text/css\" />
+\n<meta http-equiv=\"Content-Script-Type\" content=\"text/javascript\" />
+
+<?php
+	echo \$html->meta('icon');
+	echo \$html->css('base');
+	echo \$scripts_for_layout;
+
+	//タイトル表示のため、この行を削除できません。
+	echo '<title>' . \$title_for_layout . '</title>';
+?>
+\n</head>
+
+<?php
+	//コンテントページ表示のため、この行を削除できません。
+	echo \$content_for_layout;
+?>
+\n</body>
+\n</html>";
+
 				echo $form->textarea('content', array(
 					'cols' => '100',
-					'rows' => '30'
+					'rows' => '30',
+					'value' => $str
 				));
 			?>
 			</td>

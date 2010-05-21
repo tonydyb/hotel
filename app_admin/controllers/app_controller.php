@@ -98,7 +98,7 @@ class AppController extends Controller {
 	 * 言語IDを取得
 	 */
 	function getIsoId() {
-		$sql = "select id from language where iso_code='" . $this->Session->read('view_iso') . "'";
+		$sql = "select id from language where iso_code='" . $this->Session->read('view_iso') . "' and isnull(language.deleted)";
 		$result = mysql_query($sql);
 		if (!$result) {
 			die('Invalid query: ' . mysql_error());
@@ -112,6 +112,41 @@ class AppController extends Controller {
 		}
 	}
 
+	/**
+	 * 言語Codeを取得
+	 */
+	function getIsoCode($id) {
+		$sql = "select iso_code from language where id='" . $id . "' and isnull(language.deleted)";
+		$result = mysql_query($sql);
+		if (!$result) {
+			die('Invalid query: ' . mysql_error());
+		} else {
+			if (mysql_num_rows($result)) {
+				$row = mysql_fetch_row($result);
+				return $row[0];
+			} else {
+				return DEFAULT_ISO_CODE;
+			}
+		}
+	}
+
+	/**
+	 * 機種名前を取得
+	 */
+	function getCarrierCode($id) {
+		$sql = "select code from carrier_type where id='" . $id . "' and isnull(carrier_type.deleted)";
+		$result = mysql_query($sql);
+		if (!$result) {
+			die('Invalid query: ' . mysql_error());
+		} else {
+			if (mysql_num_rows($result)) {
+				$row = mysql_fetch_row($result);
+				return $row[0];
+			} else {
+				return "pc";
+			}
+		}
+	}
 }
 
 ?>

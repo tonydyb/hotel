@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS `area` (
   `updated` datetime NOT NULL,
   `deleted` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=618 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -69,7 +69,7 @@ CREATE TABLE IF NOT EXISTS `area_language` (
   `updated` datetime NOT NULL,
   `deleted` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=611 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -85,7 +85,7 @@ CREATE TABLE IF NOT EXISTS `area_link_city` (
   `updated` datetime NOT NULL,
   `deleted` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3024 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -101,7 +101,7 @@ CREATE TABLE IF NOT EXISTS `area_link_country` (
   `updated` datetime NOT NULL,
   `deleted` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=247 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -148,7 +148,7 @@ CREATE TABLE IF NOT EXISTS `breakfast_type` (
   `updated` datetime NOT NULL,
   `deleted` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=21 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -165,7 +165,7 @@ CREATE TABLE IF NOT EXISTS `breakfast_type_language` (
   `updated` datetime NOT NULL,
   `deleted` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=41 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -198,7 +198,7 @@ CREATE TABLE IF NOT EXISTS `city` (
   `updated` datetime NOT NULL,
   `deleted` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4497 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -215,7 +215,7 @@ CREATE TABLE IF NOT EXISTS `city_language` (
   `updated` datetime NOT NULL,
   `deleted` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4497 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -232,6 +232,102 @@ CREATE TABLE IF NOT EXISTS `city_link_location` (
   `deleted` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+--
+-- テーブルの構造 `content_block`
+--
+
+CREATE TABLE IF NOT EXISTS `content_block` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `language_id` int(11) unsigned NOT NULL,
+  `carrier_type_id` int(11) unsigned NOT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `alias` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `content` text COLLATE utf8_unicode_ci NOT NULL,
+  `created` datetime NOT NULL,
+  `updated` datetime NOT NULL,
+  `deleted` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- テーブルの構造 `content_css`
+--
+
+CREATE TABLE IF NOT EXISTS `content_css` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `language_id` int(11) unsigned NOT NULL,
+  `carrier_type_id` int(11) unsigned NOT NULL,
+  `alias` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `created` datetime NOT NULL,
+  `updated` datetime NOT NULL,
+  `deleted` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- テーブルの構造 `content_image`
+--
+
+CREATE TABLE IF NOT EXISTS `content_image` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `language_id` int(11) unsigned NOT NULL,
+  `carrier_type_id` int(11) unsigned NOT NULL,
+  `alias` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `type` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
+  `created` datetime NOT NULL,
+  `updated` datetime NOT NULL,
+  `deleted` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- テーブルの構造 `content_layout`
+--
+
+CREATE TABLE IF NOT EXISTS `content_layout` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `language_id` int(11) unsigned NOT NULL,
+  `carrier_type_id` int(11) unsigned NOT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `alias` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `content` text COLLATE utf8_unicode_ci NOT NULL,
+  `meta_keyword` text COLLATE utf8_unicode_ci NOT NULL,
+  `meta_description` text COLLATE utf8_unicode_ci NOT NULL,
+  `created` datetime NOT NULL,
+  `updated` datetime NOT NULL,
+  `deleted` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- テーブルの構造 `content_page`
+--
+
+CREATE TABLE IF NOT EXISTS `content_page` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `language_id` int(11) unsigned NOT NULL,
+  `carrier_type_id` int(11) unsigned NOT NULL,
+  `content_layout_id` int(11) unsigned NOT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `alias` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `content` text COLLATE utf8_unicode_ci NOT NULL,
+  `meta_keyword` text COLLATE utf8_unicode_ci NOT NULL,
+  `meta_description` text COLLATE utf8_unicode_ci NOT NULL,
+  `created` datetime NOT NULL,
+  `updated` datetime NOT NULL,
+  `deleted` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -248,7 +344,7 @@ CREATE TABLE IF NOT EXISTS `country` (
   `updated` datetime NOT NULL,
   `deleted` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=247 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -266,7 +362,7 @@ CREATE TABLE IF NOT EXISTS `country_language` (
   `updated` datetime NOT NULL,
   `deleted` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=493 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -470,6 +566,17 @@ CREATE TABLE IF NOT EXISTS `hotel` (
   `state_id` int(11) unsigned NOT NULL,
   `city_id` int(11) unsigned NOT NULL,
   `town_id` int(11) unsigned NOT NULL,
+  `tel` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `fax` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `postcode` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `total_room_number` int(11) unsigned NOT NULL,
+  `star_rate` int(11) unsigned COLLATE utf8_unicode_ci NOT NULL,
+  `latitude` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `longitude` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `display_stat` int(11) unsigned NOT NULL,
+  `checkin` time NOT NULL,
+  `checkout` time NOT NULL,
   `created` datetime NOT NULL,
   `updated` datetime NOT NULL,
   `deleted` datetime DEFAULT NULL,
@@ -496,6 +603,12 @@ CREATE TABLE IF NOT EXISTS `hotel_agent` (
   `percent` decimal(15,4) NOT NULL,
   `amount_max` decimal(15,4) NOT NULL,
   `percent_max` decimal(15,4) NOT NULL,
+  `fax` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `postcode` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `addr_country_id` int(11) unsigned NOT NULL,
+  `addr_1` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `addr_2` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `addr_3` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `created` datetime NOT NULL,
   `updated` datetime NOT NULL,
   `deleted` datetime DEFAULT NULL,
@@ -568,7 +681,7 @@ CREATE TABLE IF NOT EXISTS `hotel_grade` (
   `updated` datetime NOT NULL,
   `deleted` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=6 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -585,7 +698,7 @@ CREATE TABLE IF NOT EXISTS `hotel_grade_language` (
   `updated` datetime NOT NULL,
   `deleted` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=11 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -633,7 +746,11 @@ CREATE TABLE IF NOT EXISTS `hotel_language` (
   `language_id` int(11) unsigned NOT NULL,
   `hotel_id` int(11) unsigned NOT NULL,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `comment` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `addr_1` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `addr_2` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `addr_3` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `comment` text COLLATE utf8_unicode_ci NOT NULL,
+  `location_comment` text COLLATE utf8_unicode_ci NOT NULL,
   `created` datetime NOT NULL,
   `updated` datetime NOT NULL,
   `deleted` datetime DEFAULT NULL,
@@ -685,12 +802,12 @@ CREATE TABLE IF NOT EXISTS `hotel_room` (
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `hotel_room_facility`
+-- テーブルの構造 `hotel_room_link_room_facility`
 --
 
-CREATE TABLE IF NOT EXISTS `hotel_room_facility` (
+CREATE TABLE IF NOT EXISTS `hotel_room_link_room_facility` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `hotel_root_id` int(11) unsigned NOT NULL,
+  `hotel_room_id` int(11) unsigned NOT NULL,
   `room_facility_id` int(11) unsigned NOT NULL,
   `created` datetime NOT NULL,
   `updated` datetime NOT NULL,
@@ -749,7 +866,7 @@ CREATE TABLE IF NOT EXISTS `language` (
   `updated` datetime NOT NULL,
   `deleted` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=187 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -766,7 +883,7 @@ CREATE TABLE IF NOT EXISTS `language_language` (
   `updated` datetime NOT NULL,
   `deleted` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=281 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -781,7 +898,7 @@ CREATE TABLE IF NOT EXISTS `location` (
   `updated` datetime NOT NULL,
   `deleted` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=10 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -798,7 +915,7 @@ CREATE TABLE IF NOT EXISTS `location_language` (
   `updated` datetime NOT NULL,
   `deleted` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=19 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -916,7 +1033,7 @@ CREATE TABLE IF NOT EXISTS `meal_type` (
   `updated` datetime NOT NULL,
   `deleted` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=7 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -933,7 +1050,7 @@ CREATE TABLE IF NOT EXISTS `meal_type_language` (
   `updated` datetime NOT NULL,
   `deleted` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=13 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -950,6 +1067,7 @@ CREATE TABLE IF NOT EXISTS `media` (
   `recv_param` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `send_param` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `send_url` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `price` decimal(15,4) NOT NULL,
   `created` datetime NOT NULL,
   `updated` datetime NOT NULL,
   `deleted` datetime DEFAULT NULL,
@@ -1023,7 +1141,6 @@ CREATE TABLE IF NOT EXISTS `request` (
   `message_bord` text COLLATE utf8_unicode_ci NOT NULL,
   `request_date` datetime NOT NULL,
   `age` int(11) unsigned NOT NULL,
-  `receipt_stat` int(11) unsigned NOT NULL,
   `fix_date` datetime NOT NULL,
   `created` datetime NOT NULL,
   `updated` datetime NOT NULL,
@@ -1071,6 +1188,7 @@ CREATE TABLE IF NOT EXISTS `request_hotel` (
 CREATE TABLE IF NOT EXISTS `request_hotel_customer_user` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `request_id` int(11) unsigned NOT NULL,
+  `request_hotel_id` int(11) unsigned NOT NULL,
   `leader` int(11) unsigned NOT NULL,
   `first_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `last_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
@@ -1205,7 +1323,7 @@ CREATE TABLE IF NOT EXISTS `room_bed` (
   `updated` datetime NOT NULL,
   `deleted` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=7 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -1222,7 +1340,7 @@ CREATE TABLE IF NOT EXISTS `room_bed_language` (
   `updated` datetime NOT NULL,
   `deleted` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=13 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -1301,7 +1419,7 @@ CREATE TABLE IF NOT EXISTS `smoking` (
   `updated` datetime NOT NULL,
   `deleted` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -1318,7 +1436,7 @@ CREATE TABLE IF NOT EXISTS `smoking_language` (
   `updated` datetime NOT NULL,
   `deleted` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=5 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -1334,7 +1452,7 @@ CREATE TABLE IF NOT EXISTS `state` (
   `updated` datetime NOT NULL,
   `deleted` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2026 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -1351,7 +1469,7 @@ CREATE TABLE IF NOT EXISTS `state_language` (
   `updated` datetime NOT NULL,
   `deleted` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=926 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -1403,19 +1521,54 @@ CREATE TABLE IF NOT EXISTS `town_link_location` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 
+
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `content_block`
+-- テーブルの構造 `cancel_charge`
 --
 
-CREATE TABLE IF NOT EXISTS `content_block` (
+CREATE TABLE IF NOT EXISTS `cancel_charge` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `language_id` int(11) unsigned NOT NULL,
-  `carrier_type_id` int(11) unsigned NOT NULL,
+  `hotel_id` int(11) unsigned NOT NULL,
+  `sort_no` int(11) unsigned NOT NULL,
+  `term_from` datetime NOT NULL,
+  `term_to` datetime NOT NULL,
+  `charge_occur_from` int(11) unsigned NOT NULL,
+  `charge_occur_to` int(11) unsigned NOT NULL,
+  `charge_stat_id` int(11) unsigned NOT NULL,
+  `charge_percent` int(11) unsigned NOT NULL,
+  `remarks` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `created` datetime NOT NULL,
+  `updated` datetime NOT NULL,
+  `deleted` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+
+-- --------------------------------------------------------
+
+--
+-- テーブルの構造 `hotel_emergency_contact`
+--
+
+CREATE TABLE IF NOT EXISTS `hotel_emergency_contact` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `hotel_id` int(11) unsigned NOT NULL,
+  `hotel_agent_id` int(11) unsigned NOT NULL,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `alias` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `content` text COLLATE utf8_unicode_ci NOT NULL,
+  `sort_no` int(11) unsigned NOT NULL,
+  `area_id` int(11) unsigned NOT NULL,
+  `country_id` int(11) unsigned NOT NULL,
+  `state_id` int(11) unsigned NOT NULL,
+  `city_id` int(11) unsigned NOT NULL,
+  `addr_1` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `addr_2` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `addr_3` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `postcode` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `tel` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `tel_country_code` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `remarks` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `created` datetime NOT NULL,
   `updated` datetime NOT NULL,
   `deleted` datetime DEFAULT NULL,
@@ -1426,46 +1579,223 @@ CREATE TABLE IF NOT EXISTS `content_block` (
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `content_page`
+-- テーブルの構造 `area_convert_agent`
 --
 
-CREATE TABLE IF NOT EXISTS `content_page` (
+CREATE TABLE IF NOT EXISTS `area_convert_agent` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `language_id` int(11) unsigned NOT NULL,
-  `carrier_type_id` int(11) unsigned NOT NULL,
-  `content_layout_id` int(11) unsigned NOT NULL,
-  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `alias` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `content` text COLLATE utf8_unicode_ci NOT NULL,
-  `meta_keyword` text COLLATE utf8_unicode_ci NOT NULL,
-  `meta_description` text COLLATE utf8_unicode_ci NOT NULL,
+  `area_id` int(11) unsigned NOT NULL,
+  `hotel_agent_id` int(11) unsigned NOT NULL,
+  `code` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `created` datetime NOT NULL,
+  `updated` datetime NOT NULL,
+  `deleted` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- テーブルの構造 `breakfast_type_convert_agent`
+--
+
+CREATE TABLE IF NOT EXISTS `breakfast_type_convert_agent` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `breakfast_type_id` int(11) unsigned NOT NULL,
+  `hotel_agent_id` int(11) unsigned NOT NULL,
+  `code` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `created` datetime NOT NULL,
+  `updated` datetime NOT NULL,
+  `deleted` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- テーブルの構造 `city_convert_agent`
+--
+
+CREATE TABLE IF NOT EXISTS `city_convert_agent` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `city_id` int(11) unsigned NOT NULL,
+  `hotel_agent_id` int(11) unsigned NOT NULL,
+  `code` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `created` datetime NOT NULL,
+  `updated` datetime NOT NULL,
+  `deleted` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- テーブルの構造 `hotel_convert_agent`
+--
+
+CREATE TABLE IF NOT EXISTS `hotel_convert_agent` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `hotel_id` int(11) unsigned NOT NULL,
+  `hotel_agent_id` int(11) unsigned NOT NULL,
+  `code` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `created` datetime NOT NULL,
   `updated` datetime NOT NULL,
   `deleted` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- テーブルの構造 `hotel_facility_convert_agent`
+--
+
+CREATE TABLE IF NOT EXISTS `hotel_facility_convert_agent` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `hotel_facility_id` int(11) unsigned NOT NULL,
+  `hotel_agent_id` int(11) unsigned NOT NULL,
+  `code` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `created` datetime NOT NULL,
+  `updated` datetime NOT NULL,
+  `deleted` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- テーブルの構造 `hotel_grade_convert_agent`
+--
+
+CREATE TABLE IF NOT EXISTS `hotel_grade_convert_agent` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `hotel_grade_id` int(11) unsigned NOT NULL,
+  `hotel_agent_id` int(11) unsigned NOT NULL,
+  `code` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `created` datetime NOT NULL,
+  `updated` datetime NOT NULL,
+  `deleted` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `content_layout`
+-- テーブルの構造 `location_convert_agent`
 --
 
-CREATE TABLE IF NOT EXISTS `content_layout` (
+CREATE TABLE IF NOT EXISTS `location_convert_agent` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `location_id` int(11) unsigned NOT NULL,
+  `hotel_agent_id` int(11) unsigned NOT NULL,
+  `code` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `created` datetime NOT NULL,
+  `updated` datetime NOT NULL,
+  `deleted` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- テーブルの構造 `language_convert_agent`
+--
+
+CREATE TABLE IF NOT EXISTS `language_convert_agent` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `language_id` int(11) unsigned NOT NULL,
-  `carrier_type_id` int(11) unsigned NOT NULL,
-  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `alias` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `content` text COLLATE utf8_unicode_ci NOT NULL,
-  `meta_keyword` text COLLATE utf8_unicode_ci NOT NULL,
-  `meta_description` text COLLATE utf8_unicode_ci NOT NULL,
+  `hotel_agent_id` int(11) unsigned NOT NULL,
+  `iso_code` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `created` datetime NOT NULL,
+  `updated` datetime NOT NULL,
+  `deleted` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- テーブルの構造 `meal_type_convert_agent`
+--
+
+CREATE TABLE IF NOT EXISTS `meal_type_convert_agent` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `meal_type_id` int(11) unsigned NOT NULL,
+  `hotel_agent_id` int(11) unsigned NOT NULL,
+  `code` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `created` datetime NOT NULL,
+  `updated` datetime NOT NULL,
+  `deleted` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+
+-- --------------------------------------------------------
+
+--
+-- テーブルの構造 `room_bed_convert_agent`
+--
+
+CREATE TABLE IF NOT EXISTS `room_bed_convert_agent` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `room_bed_id` int(11) unsigned NOT NULL,
+  `hotel_agent_id` int(11) unsigned NOT NULL,
+  `code` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `created` datetime NOT NULL,
+  `updated` datetime NOT NULL,
+  `deleted` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- テーブルの構造 `room_facility_convert_agent`
+--
+
+CREATE TABLE IF NOT EXISTS `room_facility_convert_agent` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `room_facility_id` int(11) unsigned NOT NULL,
+  `hotel_agent_id` int(11) unsigned NOT NULL,
+  `code` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `created` datetime NOT NULL,
   `updated` datetime NOT NULL,
   `deleted` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- テーブルの構造 `room_grade_convert_agent`
+--
+
+CREATE TABLE IF NOT EXISTS `room_grade_convert_agent` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `room_grade_id` int(11) unsigned NOT NULL,
+  `hotel_agent_id` int(11) unsigned NOT NULL,
+  `code` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `created` datetime NOT NULL,
+  `updated` datetime NOT NULL,
+  `deleted` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- テーブルの構造 `smoking_convert_agent`
+--
+
+CREATE TABLE IF NOT EXISTS `smoking_convert_agent` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `smoking_id` int(11) unsigned NOT NULL,
+  `hotel_agent_id` int(11) unsigned NOT NULL,
+  `code` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `created` datetime NOT NULL,
+  `updated` datetime NOT NULL,
+  `deleted` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 

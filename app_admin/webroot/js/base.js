@@ -25,26 +25,48 @@ function regist_no_message(formname, target) {
 }
 
 // app_admin/request/editで使用
-function clear_tgt_customer_data(target_no) {
-	var tgt1 = "RequestDataRequestHotelCustomerUser" + target_no + "FirstName";
-	var tgt2 = "RequestDataRequestHotelCustomerUser" + target_no + "LastName";
-	var tgt3 = "RequestDataRequestHotelCustomerUser" + target_no + "Age";
-	var tgt4 = "RequestDataRequestHotelCustomerUser" + target_no + "GenderId";
-	var tgt5 = "RequestDataRequestHotelCustomerUser" + target_no + "Adult";
+function new_window_submit(formname, target) {
+	var select = document.getElementById('MailTemplateId').value;
+
+	if (select > 0) {
+		var win = window.open("about:blank", "new_window", "WindowStyle");
+		document.forms[formname].target = "new_window";
+		document.forms[formname].action = target;
+		document.forms[formname].submit();
+	}
+}
+
+// app_admin/request/mailで使用
+function new_window_close() {
+	if(document.all){
+		window.opener = true;
+	}
+	window.close();
+}
+
+// app_admin/request/editで使用
+function clear_tgt_customer_data(target_no1, target_no2) {
+	var tgt1 = "RequestHotelCustomerUser" + target_no1 + "" + target_no2 + "FirstName";
+	var tgt2 = "RequestHotelCustomerUser" + target_no1 + "" + target_no2 + "LastName";
+	var tgt3 = "RequestHotelCustomerUser" + target_no1 + "" + target_no2 + "Age";
+	var tgt4 = "RequestHotelCustomerUser" + target_no1 + "" + target_no2 + "GenderId";
+	var tgt5 = "RequestHotelCustomerUser" + target_no1 + "" + target_no2 + "Adult";
+	var tgt6 = "RequestHotelCustomerUser" + target_no1 + "" + target_no2 + "Leader";
 
 	document.getElementById(tgt1).value = "";
 	document.getElementById(tgt2).value = "";
 	document.getElementById(tgt3).value = "";
 	document.getElementById(tgt4).selectedIndex  = 0;
 	document.getElementById(tgt5).selectedIndex  = 0;
+	document.getElementById(tgt6).selectedIndex  = 0;
 }
 
-//app_admin/request/editで使用
+// app_admin/request/editで使用
 function copy_send_email_address(tgt_mobile) {
 	if (tgt_mobile) {
-		document.getElementById('RequestDataMailTemplateToEmail').value = document.getElementById('RequestDataRequestEmailMobile').value;
+		document.getElementById('MailTemplateToEmail').value = window.opener.document.getElementById('RequestEmailMobile').value;
 	} else {
-		document.getElementById('RequestDataMailTemplateToEmail').value = document.getElementById('RequestDataRequestEmail').value;
+		document.getElementById('MailTemplateToEmail').value = window.opener.document.getElementById('RequestEmail').value;
 	}
 }
 

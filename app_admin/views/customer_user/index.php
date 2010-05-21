@@ -175,7 +175,7 @@
 				<?php echo $form->create('mail_magazine', array('type' => 'post', 'action' => '/mail' ,'name' => 'form2', 'url'=>array('controller'=>'customer_user'))); ?>
 					<table>
 						<tr>
-							<th colspan="14">
+							<th colspan="15">
 								<?php
 									echo __('この条件内で、');
 									$msg1 = sprintf(__('全員（現在 %s 名様）の', true), $paginator->params['paging']['CustomerUser']['count']);
@@ -200,12 +200,14 @@
 							</th>
 						</tr>
 						<tr>
-						<th colspan="14">
+						<th colspan="15">
 							<?php echo $this->renderElement('paginator'); ?>
 						</th>
 						</tr>
 						<tr>
 							<th></th>
+							<th><?php echo __('会員<br />詳細') ?></th>
+							<th><?php echo __('新規<br />申込') ?></th>
 							<th>
 								<?php echo __('ID') ?>
 								<div>
@@ -302,7 +304,6 @@
 									<?php echo $paginator->sort('▲', 'CustomerUser.created', array('url'=>array('direction'=>'desc'))); ?>]
 								</div>
 							</th>
-							<th></th>
 						</tr>
 						<?php
 							$mail_delivery_list = array();
@@ -317,6 +318,8 @@
 								<td>
 									<?php echo $form->checkbox('MailMagazine.checked.' . $i, array('value' => $view_data['CustomerUser']['id'])) ?>
 								</td>
+								<td><?php echo $html->link(__('詳細', true), '/customer_user/edit/' . $view_data['CustomerUser']['id'] .'/'); ?></td>
+								<td><?php echo $html->link(__('申込', true), '/request/add/' . $view_data['CustomerUser']['id'] .'/'); ?></td>
 								<td><?php echo $view_data['CustomerUser']['id']; ?></td>
 								<td><?php echo $view_data['CustomerUser']['first_name']; ?></td>
 								<td><?php echo $view_data['CustomerUser']['last_name']; ?></td>
@@ -329,7 +332,6 @@
 								<td><?php echo $magazine_name[$view_data['CustomerUser']['mail_magazine_type_id']]; ?></td>
 								<td><?php echo $customer_type_name[$view_data['CustomerUser']['customer_type_id']]; ?></td>
 								<td><?php echo $view_data['CustomerUser']['created']; ?></td>
-								<td><?php echo $html->link(__('詳細', true), '/customer_user/edit/' . $view_data['CustomerUser']['id'] .'/'); ?></td>
 							</tr>
 							<?php $i++ ?>
 						<?php } ?>

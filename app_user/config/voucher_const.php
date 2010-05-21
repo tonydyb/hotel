@@ -1,0 +1,14 @@
+<?php
+	// voucher用ISOコード
+	define('VOUCHER_ISO_CODE', 'en');
+	// 大人・子供コード 大人
+	define('ADULT_CODE_ADULT', '1');
+	// 性別コード 男
+	define('GENDER_ID_MALE', '1');
+	// REQUEST_HOTEL_CUSTOMER_USER をREQUEST_IDで取得用 第一引数 request_id 第二引数 request_hotel_id
+	define('REQUEST_HOTEL_CUSTOMER_USER_LIST_SQL', 'SELECT * FROM request_hotel_customer_user WHERE request_id = ? AND request_hotel_id = ? AND isnull(deleted) ORDER BY leader DESC, id ASC');
+	// バウチャーに必要なデータを取得します 第一引数 customer_user_id 第二引数 password 第三引数 request_hotel_id 第四引数 ISOコード
+	define('VAUCHER_DATA_SQL', 'SELECT * FROM (SELECT DISTINCT rh.*, h.tel AS hotel_tel, h.fax AS hotel_fax, h.email AS hotel_email, h.postcode AS hotel_postcode, hl.name AS hotel_name, hl.addr_1 AS hotel_addr_1, hl.addr_2 AS hotel_addr_2, hl.addr_3 AS hotel_addr_3, hrl.name AS hotel_room_name, btl.name AS breakfast_name, cl.name_long AS country, cil.name AS city, sl.name AS STATE, l.id AS language_id FROM request_hotel rh JOIN request r ON (rh.request_id = r.id AND r.deleted IS NULL AND r.customer_user_id = ?) JOIN customer_user cu ON (r.customer_user_id = cu.id AND cu.password = ? AND cu.deleted IS NULL) JOIN LANGUAGE l ON (rh.id = ? AND l.iso_code = ? AND rh.deleted IS NULL AND l.deleted IS NULL) JOIN hotel_language hl ON (hl.hotel_id = rh.hotel_id AND l.id = hl.language_id AND hl.deleted IS NULL) JOIN hotel h ON (rh.hotel_id = h.id AND h.deleted IS NULL) JOIN country_language cl ON (cl.country_id = h.country_id AND cl.language_id = l.id AND cl.deleted IS NULL) JOIN city_language cil ON (cil.city_id = h.city_id AND cil.language_id = l.id AND cil.deleted IS NULL) JOIN hotel_room hr ON (rh.hotel_room_id = hr.id AND hr.deleted IS NULL) JOIN hotel_room_language hrl ON (hr.id = hrl.hotel_room_id AND hrl.language_id = l.id AND hrl.deleted IS NULL) LEFT JOIN breakfast_type_language btl ON (hr.hotel_id = hr.breakfast_type_id = btl.breakfast_type_id AND btl.language_id = l.id AND btl.deleted IS NULL) LEFT JOIN state_language sl ON (sl.id = h.state_id AND sl.language_id = l.id AND sl.deleted IS NULL)) voucher_data');
+	// ホテル 緊急連絡先リストを取得します 第一引数 hotel_id 第二引数 hotel_agent_id
+	define('HOTEL_EMERGENCY_CONTACT_LIST_SQL', 'SELECT * FROM (SELECT hec.*, al.name AS area_name, cl.name_long AS country_name, cil.name AS city_name, sl.name AS state_name FROM hotel_emergency_contact hec JOIN LANGUAGE l ON (l.iso_code = \'en\' AND l.deleted IS NULL) JOIN area_language al ON (hec.area_id = al.area_id AND l.id = al.language_id AND al.deleted IS NULL) JOIN country_language cl ON (hec.country_id = cl.country_id AND l.id = cl.language_id AND cl.deleted IS NULL) JOIN city_language cil ON (hec.city_id = cil.city_id AND l.id = cil.language_id AND cil.deleted IS NULL) LEFT JOIN state_language sl ON (hec.state_id = sl.state_id AND l.id = sl.language_id AND sl.deleted IS NULL) WHERE hec.hotel_id = ? AND hec.hotel_agent_id = ? ORDER BY sort_no ASC) hotel_emergency_contact');
+?>

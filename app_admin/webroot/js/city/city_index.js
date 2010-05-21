@@ -6,13 +6,23 @@ $(document).ready(function(){
 
 
 var searchButtonClickedEventListener = function() {
-    $(".searchBtn").click(function () {
-        var searchStr = $("#CityCode").val();
+
+	$("#searchLink").click(function () {
+        var searchStr = '';
+        if ($('#CountryId option:selected').val() != '') {
+        	searchStr = 'country_id:' + $('#CountryId option:selected').val();
+        }
+        if ($('#code').val() != '') {
+        	if (searchStr != '') {
+        		searchStr += '/';
+        	}
+        	searchStr += 'code:' + $('#code').val();
+        }
 
         if (searchStr == '') {
             var action = '/hotel/app_admin/city/index';
         } else {
-            var action = '/hotel/app_admin/city/index/code:'+searchStr;
+            var action = '/hotel/app_admin/city/index/'+searchStr;
         }
         $('form')
             .attr('action', action)

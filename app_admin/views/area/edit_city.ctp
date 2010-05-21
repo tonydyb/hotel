@@ -19,16 +19,20 @@
 					<th><?php echo __('Name'); ?></th>
 					<th><?php echo __('Delete'); ?></th>
 				</tr>
-				<?php foreach ($names as $name) { ?>
+				<?php foreach ($names as $name) {
+						if ($name['AreaLinkCity']['id'] != NULL) {
+				?>
 				<tr>
 					<td>
 						<?php echo (trim($name['City']['name'])=="" ? "no name" : $name['City']['name']); ?>
 					</td>
 					<td>
-						<?php echo $html->link(__('Delete', true), array('action' => 'deleteCity', $name['AreaLinkCity']['id']));?>
+						<?php echo $html->link(__('Delete', true), array('action' => 'deleteCity', $name['AreaLinkCity']['id']), array('class' => 'deleteLink'), 'Are you sure?');?>
 					</td>
 				</tr>
-				<?php } ?>
+				<?php }
+					}
+				 ?>
 			</table>
 		</div>
 

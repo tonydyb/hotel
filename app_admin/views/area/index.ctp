@@ -34,37 +34,31 @@
 			<th class="actions"><?php __('Edit Name');?></th>
 			<th class="actions"><?php __('Area Link Country');?></th>
 			<th class="actions"><?php __('Area Link City');?></th>
+			<th class="actions"><?php __('Delete');?></th>
 		</tr>
 
-		<?php foreach($areas as $area) { ?>
-			<tr>
-				<td>
-					<?php echo $area['area']['id']; ?>
-				</td>
-				<td>
-					<?php echo $area['area']['code']; ?>
-				</td>
-				<td>
-					<?php echo $area['area_language']['name']; ?>
-				</td>
-				<td class="actions">
-					<?php echo $html->link(__('Edit', true), array('action' => 'edit', $area['area']['id'])); ?>
-				</td>
-				<td class="actions">
-					<?php echo $html->link(__('Edit Name', true), array('action' => 'editName', $area['area']['id'])); ?>
-				</td>
-				<td class="actions">
-					<?php echo $html->link(__('Edit Country', true), array('action' => 'editCountry', $area['area']['id'])); ?>
-				</td>
-				<td class="actions">
-					<?php echo $html->link(__('Edit City', true), array('action' => 'editCity', $area['area']['id'])); ?>
-				</td>
-			</tr>
-		<?php } ?>
+		<?php
+			foreach($areas as $area) {
+				echo $html->tableCells(
+					array(
+						array(
+							$area['area']['id'],
+							$area['area']['code'],
+							$area['area_language']['name'],
+							array($html->link(__('Edit', true), array('action' => 'edit', $area['area']['id'])), aa('class','actions')),
+							array($html->link(__('Edit Name', true), array('action' => 'editName', $area['area']['id'])), aa('class','actions')),
+							array($html->link(__('Edit Country', true), array('action' => 'editCountry', $area['area']['id'])), aa('class','actions')),
+							array($html->link(__('Edit City', true), array('action' => 'editCity', $area['area']['id'])), aa('class','actions')),
+							array($html->link(__('Delete', true), array('action' => 'delete', $area['area']['id']), array('class' => 'deleteLink'), 'Are you sure?'), aa('class','actions'))
+						)
+					)
+				);
+			}
+		?>
 		</table>
 		<?php echo $this->renderElement('index_paging'); ?>
 	</div>
-
+	<?php echo $this->renderElement('message'); ?>
 
 </div>
 

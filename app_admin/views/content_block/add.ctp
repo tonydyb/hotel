@@ -1,5 +1,5 @@
 <?php
-	echo $javascript->link('content/content_block_add');
+	echo $javascript->link('content_block/content_block_add');
 ?>
 <div id="top">
 	<div id="header">

@@ -14,10 +14,8 @@ class CustomerUserController extends AppController {
 		} else {
 			// 検索データ用スケルトン作成
 			$cnd = $this->makeSearchSkeleton();
-		}
-
-		if (!is_null($base_condition)) {
-			$cnd = $base_condition;
+			$this->Session->write(CUS_SESSION, $cnd);
+			$this->Session->write(CUS_SESSION_BASE, $cnd);
 		}
 
 		if (empty($cnd['day_from'])) {
@@ -26,8 +24,13 @@ class CustomerUserController extends AppController {
 		if (empty($cnd['day_to'])) {
 			$cnd['day_to'] = date('Y-m-d');
 		}
-		if ($this->Session->check(CUS_SESSION)) {
-			$this->Session->write(CUS_SESSION, $cnd);
+
+		if (!is_null($base_condition)) {
+			$cnd = $base_condition;
+			$this->set('Condition', $this->Session->read(CUS_SESSION));
+			$this->Session->write(CUS_SESSION_BASE, $cnd);
+		} else {
+			$this->set('Condition', $cnd);
 		}
 
 		$cnd_db = $cnd;
@@ -76,11 +79,11 @@ class CustomerUserController extends AppController {
 			 );
 		$this->paginate=$search_cond;
 		$this->set('CustomerUser', $this->paginate('CustomerUser'));
-		$this->set('Condition', $cnd);
+//		$this->set('Condition', $cnd);
 	}
 
 	function search($page = 1) {
-		$base_condition = $this->Session->read(CUS_SESSION);
+		$base_condition = $this->Session->read(CUS_SESSION_BASE);
 		if(!empty($this->data)) {
 			if (checkdate($this->data['Condition']['day_from']['month'], $this->data['Condition']['day_from']['day'], $this->data['Condition']['day_from']['year'])) {
 				$this->data['Condition']['day_from'] = date('Y-m-d', strtotime($this->data['Condition']['day_from']['year'].'-'.$this->data['Condition']['day_from']['month'].'-'.$this->data['Condition']['day_from']['day']));
@@ -95,11 +98,11 @@ class CustomerUserController extends AppController {
 			$this->Condition->set($this->data);
 			$this->Session->write(CUS_SESSION, $this->data['Condition']);
 			if ($this->Condition->validates($this->data)) {
-				$this->redirect('/customer_user/index/');
+				$this->index(null);
+				$this->render('/customer_user/index/');
 			} else {
 				$this->index($base_condition);
 				$this->render('/customer_user/index/');
-				$this->set('msgs',  $this->Condition->invalidFields());
 			}
 		}
 	}

@@ -50,6 +50,12 @@ class CountryController extends AppController {
 			$this->Session->setFlash(__('Invalid Country', true));
 			$this->redirect(array('action' => '/index'));
 		}
+		//既に削除されたのレコードは編集できません
+		if(!$this->Country->find('count', array( 'conditions' => array('country.id' => !$id ? $this->data['Country']['id']:$id, 'country.deleted' => NULL)))) {
+			$this->Session->setFlash(__('Invalid Country', true), 'default', array('class' => 'error'));
+			$this->redirect(array('action' => 'index'));
+		}
+
 		if (!empty($this->data)) {
 			if ($this->Country->save($this->data)) {
 				$this->Session->setFlash(__('The Country has been saved', true));
@@ -68,7 +74,7 @@ class CountryController extends AppController {
 //			$this->Session->setFlash(__('Invalid id for Country', true));
 //			$this->redirect(array('action' => '/index'));
 //		}
-//		if ($this->Country->del($id)) {
+//		if ($this->Country->advDel($id)) {
 //			$this->Session->setFlash(__('Country deleted', true));
 //			$this->redirect(array('action' => '/index'));
 //		}
@@ -85,13 +91,13 @@ class CountryController extends AppController {
 			$this->redirect(array('action' => 'index'));
 		}
 
-		$this->set('names', $this->Country->query("select Country.id, Country.iso_code_a2, Language.name, CountryLanguage.name_long as name from country as Country
-													left join (select * from country_language) as CountryLanguage on Country.id=CountryLanguage.country_id
-													left join (select language.id as id, LanguageLanguage.name as name from language
-																left join (select * from language_language where iso_language_id=" . $this->getIsoId() . ") as LanguageLanguage on LanguageLanguage.language_id = language.id) as Language on Language.id=CountryLanguage.language_id
-													where Country.id=$id"));
+		$this->set('names', $this->Country->query("select Country.id, Country.iso_code_a2, Language.name, CountryLanguage.name_long as name from (select * from country where isnull(country.deleted)) as Country
+													left join (select * from country_language where isnull(country_language.deleted)) as CountryLanguage on Country.id=CountryLanguage.country_id
+													left join (select language.id as id, LanguageLanguage.name as name from (select * from language where isnull(language.deleted)) as language
+																left join (select * from language_language where iso_language_id=" . $this->getIsoId() . " and isnull(language_language.deleted)) as LanguageLanguage on LanguageLanguage.language_id = language.id) as Language on Language.id=CountryLanguage.language_id
+													where Country.id=$id and isnull(Country.deleted)"));
 
-		$this->set('languages', $this->SelectGetter->getLanguage());
+		$this->set('languages', $this->SelectGetter->getLanguageMin());
 	}
 
 	/**

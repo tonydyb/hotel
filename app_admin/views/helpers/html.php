@@ -646,16 +646,32 @@ class HtmlHelper extends AppHelper {
 		return $out;
 	}
 
-	function dateFormat($date,$format = "Y/m/d") {
-		return date($format,strtotime($date));
+	function dateFormat($date, $format = "Y/m/d") {
+		$result = '';
+		if (!empty($date)) {
+			if ($date == '0000-00-00 00:00:00') {
+				$result = '';
+			} else {
+				$result = date($format, strtotime($date));
+			}
+		}
+		return $result;
 	}
 
-	function df($date,$format = "Y/m/d") {
-		return $this->dateFormat($date,$format);
+	function df($date, $format = "Y/m/d") {
+		$result = '';
+		if (!empty($date)) {
+			$result = $this->dateFormat($date, $format);
+		}
+		return $result;
 	}
 
 	function dmf($date, $format = "Y/m/d H:i") {
-		return $this->dateFormat($date, $format);
+		$result = '';
+		if (!empty($date)) {
+			$result = $this->dateFormat($date, $format);
+		}
+		return $result;
 	}
 
 }

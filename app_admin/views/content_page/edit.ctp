@@ -1,5 +1,5 @@
 <?php
-	echo $javascript->link('content/content_layout_edit');
+	echo $javascript->link('content_page/content_page_edit');
 ?>
 
 <div id="top">
@@ -12,9 +12,9 @@
 		<div id="main">
 
 <div id="main_contents" >
-<?php echo $form->create('ContentLayout');?>
+<?php echo $form->create('ContentPage');?>
 	<fieldset class="fieldset">
- 		<legend><?php __('Edit Content Layout');?></legend>
+ 		<legend><?php __('Edit Content Page');?></legend>
 		<div>
 		<table>
 		<tr>
@@ -22,7 +22,7 @@
 			<td>
 				<select style="width:200px" id="LanguageId" name="LanguageId">
 					<?php foreach ($languages as $language) {?>
-						<option value="<?php echo $language['language']['id']; ?>" <?php echo $language['language']['id']==$this->data['ContentLayout']['language_id']?"selected='selected'":"" ?>><?php echo ($language['language_language']['name']=='' ? 'no name':$language['language_language']['name']); ?></option>
+						<option value="<?php echo $language['language']['id']; ?>" <?php echo $language['language']['id']==$this->data['ContentPage']['language_id']?"selected='selected'":"" ?>><?php echo ($language['language_language']['name']=='' ? 'no name':$language['language_language']['name']); ?></option>
 					<?php } ?>
 				</select>
 			</td>
@@ -32,7 +32,17 @@
 			<td>
 				<select style="width:50px" id="CarrierTypeId" name="CarrierTypeId">
 					<?php foreach ($carrierTypes as $carrierType) {?>
-						<option value="<?php echo $carrierType['CarrierType']['id']; ?>" <?php echo $carrierType['CarrierType']['id']==$this->data['ContentLayout']['carrier_type_id']?"selected='selected'":"" ?>><?php echo ($carrierType['CarrierType']['name']); ?></option>
+						<option value="<?php echo $carrierType['CarrierType']['id']; ?>" <?php echo $carrierType['CarrierType']['id']==$this->data['ContentPage']['carrier_type_id']?"selected='selected'":"" ?>><?php echo ($carrierType['CarrierType']['name']); ?></option>
+					<?php } ?>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<th style="text-align:left"><label><?php __('Layout Name');?></label></th>
+			<td>
+				<select style="width:50px" id="ContentLayoutId" name="ContentLayoutId">
+					<?php foreach ($contentLayouts as $contentLayout) {?>
+						<option value="<?php echo $contentLayout['ContentLayout']['id']; ?>" <?php echo $contentLayout['ContentLayout']['id']==$this->data['ContentPage']['content_layout_id']?"selected='selected'":"" ?>><?php echo ($contentLayout['ContentLayout']['name']); ?></option>
 					<?php } ?>
 				</select>
 			</td>
@@ -41,6 +51,10 @@
 			<th style="text-align:left"><label><?php __('Name');?></label></th>
 			<td>
 			<?php
+				echo $form->hidden('oldLanguageId', array('value' => $this->data['ContentPage']['language_id']));
+				echo $form->hidden('oldCarrierTypeId', array('value' => $this->data['ContentPage']['carrier_type_id']));
+				echo $form->hidden('oldAlias', array('value' => $this->data['ContentPage']['alias']));
+
 				echo $form->input('id', array(
 					'label' => __(''),
 					'div'=>'formfield',
@@ -133,7 +147,7 @@
 </div>
 <div class="actions">
 	<ul>
-		<li><?php echo $html->link(__('ContentLayout List', true), array('action' => '/index'));?></li>
+		<li><?php echo $html->link(__('ContentPage List', true), array('action' => '/index'));?></li>
 	</ul>
 </div>
 

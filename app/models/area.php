@@ -47,5 +47,6 @@ class Area extends AppModel {
 			'counterQuery' => ''
 		)
 	);
+
 }
 ?>

@@ -129,12 +129,16 @@
 		'content_block' => 'content_block',
 		'content_page' => 'content_page',
 		'content_layout' => 'content_layout',
+		'cancel_charge' => 'cancel_charge',
+		'hotel_emergency_contact' => 'hotel_emergency_contact',
+		'hotel_room_link_room_facility' => 'hotel_room_link_room_facility',
 
 		// 以下テーブル定義なし
 		'admin' => 'admin',
 		'login' => 'login',
 		'view_language' => 'view_language',
 		'condition' => 'condition',
+		'condition2' => 'condition2',
 	);
 
 /**

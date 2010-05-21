@@ -15,10 +15,10 @@
 ?>
 </td>
 <td id="language">
-<a href="">パスワード変更</a>&nbsp;
+<?php echo $html->link(__('パスワード変更', true), ''); ?>
 </td>
 <td id="language">
-<a href="/login/logoff">ログアウト</a>
+<?php echo $html->link(__('ログアウト', true), '/login/logoff/'); ?>
 </td>
 </tr>
 </table>

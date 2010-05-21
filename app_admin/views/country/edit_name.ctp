@@ -34,7 +34,7 @@
 			<?php echo $form->create('Country', array('action' => 'addName'));?>
 			<?php echo $form->hidden("CountryId", array("value" => $names[0]['Country']['id'])); ?>
 			<div style="float:left;padding-right:10px">
-				<select style="width:100px" id="LanguageId" name="LanguageId">
+				<select id="LanguageId" name="LanguageId">
 					<?php foreach ($languages as $language) {?>
 						<option value="<?php echo $language['language']['id']; ?>"><?php echo ($language['language_language']['name']=='' ? 'no name':$language['language_language']['name']); ?></option>
 					<?php } ?>

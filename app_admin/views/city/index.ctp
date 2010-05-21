@@ -15,10 +15,24 @@
 	<?php echo $this->renderElement('index_title', array("title" => __('City'))); ?>
 
 	<div id="search">
-		<?php echo $form->create('City'); ?>
-			<div style="float:left;padding-right:5px;"><?php echo $form->input('code'); ?></div>
-			<div style="float:left;padding-right:5px;"><?php echo $form->button('Search', array('type'=>'button', 'class'=>'searchBtn')); ?></div>
-		<?php echo $form->end(); ?>
+		<table>
+			<tr>
+				<th style="text-align:left"><label><?php __('Country');?></label></th>
+				<td>
+					<select id="CountryId" name="CountryId">
+						<option value="" <?php if (isset($this->passedArgs['country_id'])) { echo ''==$this->passedArgs['country_id']?"selected='selected'":""; } ?>></option>
+						<?php foreach ($countries as $country) { ?>
+							<option value="<?php echo $country['Country']['id']; ?>" <?php if (isset($this->passedArgs['country_id'])) { echo $country['Country']['id']==$this->passedArgs['country_id']?"selected='selected'":""; } ?>><?php echo ($country['CountryLanguage']['name']=='' ? 'no name':$country['CountryLanguage']['name']); ?></option>
+						<?php } ?>
+					</select>
+				</td>
+				<th style="text-align:left"><label><?php __('Code');?></label></th>
+				<td>
+					<?php echo $html->tag('input', null, array('id' => 'code', 'value' => isset($this->passedArgs['code']) ? $this->passedArgs['code']:'')); ?>
+				</td>
+				<td><a href="#" id="searchLink">Search</a></td>
+			</tr>
+		</table>
 	</div>
 	<div class="clear"></div>
 
@@ -34,28 +48,22 @@
 			<th class="actions"><?php __('Edit');?></th>
 			<th class="actions"><?php __('Edit Name');?></th>
 		</tr>
-		<?php foreach ($cities as $city): ?>
-			<tr>
-				<td>
-					<?php echo $city['City']['id']; ?>
-				</td>
-				<td>
-					<?php echo $city['CountryLanguage']['name_long']; ?>
-				</td>
-				<td>
-					<?php echo $city['City']['code']; ?>
-				</td>
-				<td>
-					<?php echo $city['CityLanguage']['name']; ?>
-				</td>
-				<td class="actions">
-					<?php echo $html->link(__('Edit', true), array('action' => 'edit', $city['City']['id'])); ?>
-				</td>
-				<td class="actions">
-					<?php echo $html->link(__('Edit Name', true), array('action' => 'editName', $city['City']['id'])); ?>
-				</td>
-			</tr>
-		<?php endforeach; ?>
+		<?php
+			foreach ($cities as $city) {
+				echo $html->tableCells(
+					array(
+						array(
+							$city['City']['id'],
+							$city['CountryLanguage']['name_long'],
+							$city['City']['code'],
+							$city['CityLanguage']['name'],
+							array($html->link(__('Edit', true), array('action' => 'edit', $city['City']['id'])), aa('class','actions')),
+							array($html->link(__('Edit Name', true), array('action' => 'editName', $city['City']['id'])), aa('class','actions')),
+						)
+					)
+				);
+ 			}
+ 		?>
 		</table>
 	</div>
 

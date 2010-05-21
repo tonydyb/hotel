@@ -29,6 +29,7 @@ class Condition2 extends AppModel {
 		'request_payment_id'	=> array('type'=>'integer'),
 		'media_id'				=> array('type'=>'integer'),
 
+		'auth_request_id'		=> array('type'=>'string', 'length'=>255),
 	);
 
 
@@ -135,7 +136,15 @@ class Condition2 extends AppModel {
 //					'required' => true,
 				),
 			),
-	);
+		'auth_request_id' =>
+			array(
+				'maxLength' =>
+				array(
+					'rule' => array('maxLength', '255', ),
+//					'required' => true,
+				),
+			),
+		);
 
 	function decimal_check($num, $places = 4) {
 		foreach ($num as $data) {
@@ -144,7 +153,7 @@ class Condition2 extends AppModel {
 			}
 
 			$regex = '/^[-+]?[0-9]*\.?[0-9]{0,'.$places.'}$/';
-			return ereg($regex, $data);
+			return preg_match($regex, $data);
 		}
 	}
 

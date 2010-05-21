@@ -10,13 +10,21 @@ class CityController extends AppController {
 	 * 都市一覧
 	 */
 	function index() {
+		$this->set('countries', $this->SelectGetter->getCountry());
+
+		if (isset($this->passedArgs['country_id'])) {
+			$country_id = $this->passedArgs['country_id'];
+		} else {
+			$country_id = null;
+		}
+
 		if (isset($this->passedArgs['code'])) {
 			$code = $this->passedArgs['code'];
 		} else {
 			$code = null;
 		}
 
-		$cond = $this->Page->getSqlListCity($this->getIsoId(), $code);
+		$cond = $this->Page->getSqlListCity($this->getIsoId(), $country_id, $code);
 		$this->paginate = array(
 			'conditions'=>$cond,
 			'order'=>'id ASC',
@@ -56,6 +64,12 @@ class CityController extends AppController {
 	function edit($id = null) {
 		if (!$id && empty($this->data)) {
 			$this->Session->setFlash(__('Invalid City', true));
+			$this->redirect(array('action' => 'index'));
+		}
+
+		//既に削除されたのレコードは編集できません
+		if(!$this->City->find('count', array( 'conditions' => array('city.id' => !$id ? $this->data['City']['id']:$id, 'city.deleted' => NULL)))) {
+			$this->Session->setFlash(__('Invalid City', true), 'default', array('class' => 'error'));
 			$this->redirect(array('action' => 'index'));
 		}
 
@@ -100,13 +114,13 @@ class CityController extends AppController {
 			$this->redirect(array('action' => 'index'));
 		}
 
-		$this->set('names', $this->City->query("select City.id, City.code, Language.name, CityLanguage.name from city as City
-													left join (select * from city_language) as CityLanguage on City.id=CityLanguage.city_id
-													left join (select language.id as id, LanguageLanguage.name as name from language
-																left join (select * from language_language where iso_language_id=" . $this->getIsoId() . ") as LanguageLanguage on LanguageLanguage.language_id = language.id) as Language on Language.id=CityLanguage.language_id
-													where City.id=$id"));
+		$this->set('names', $this->City->query("select City.id, City.code, Language.name, CityLanguage.name from (select * from city where isnull(city.deleted)) as City
+													left join (select * from city_language where isnull(city_language.deleted)) as CityLanguage on City.id=CityLanguage.city_id
+													left join (select language.id as id, LanguageLanguage.name as name from (select * from language where isnull(language.deleted)) as language
+																left join (select * from language_language where iso_language_id=" . $this->getIsoId() . " and isnull(language_language.deleted)) as LanguageLanguage on LanguageLanguage.language_id = language.id) as Language on Language.id=CityLanguage.language_id
+													where City.id=$id and isnull(City.deleted)"));
 
-		$this->set('languages', $this->SelectGetter->getLanguage());
+		$this->set('languages', $this->SelectGetter->getLanguageMin());
 	}
 
 	/**

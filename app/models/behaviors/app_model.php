@@ -60,6 +60,13 @@ class AppModel extends Model {
 	 */
 	var $_error_messages = array();
 
+	/**
+	 * Whether or not the model record exists, set by Model::advExists().
+	 *
+	 * @var bool
+	 * @access private
+	 */
+	var $__advExists = null;
 
 	/**
 	 * Define default validation error messages
@@ -206,6 +213,84 @@ class AppModel extends Model {
 	{
 		$db =& ConnectionManager::getDataSource($this->useDbConfig);
 		$db->rollback($this);
+	}
+
+	function paginateCount($conditions = null, $recursive = 0, $extra = array()) {
+		$params = array('conditions' => $conditions);
+		$this->recursive = $recursive;
+		$count = $this->find('count', array_merge($params, $extra));
+		if(isset($extra['group'])) {
+			$count = $this->getAffectedRows();
+		}
+		return $count;
+	}
+
+	/**
+	 * set deleted=null record for given ID. If no ID is given, the current ID is used. Returns true on success.
+	 *
+	 * @param mixed $id ID of record to delete
+	 * @param boolean $cascade Set to true to delete records that depend on this record
+	 * @return boolean True on success
+	 * @access public
+	 */
+	function advDel($id = null) {
+		if (!empty($id)) {
+			$this->id = $id;
+		}
+		$id = $this->id;
+
+		if ($this->advExists()) {
+			$this->id = $id;
+
+			if ($this->updateAll(array($this->alias . '.deleted' => 'now()'), array($this->alias . '.id' => $this->id))) {
+				$this->__advExists = null;
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * set deleted=null record for conditons. If no ID is given, the current ID is used. Returns true on success.
+	 *
+	 * @param mixed $id ID of record to delete
+	 * @param boolean $cascade Set to true to delete records that depend on this record
+	 * @return boolean True on success
+	 * @access public
+	 */
+	function advDelAll($conditions) {
+		if ($this->updateAll(array($this->alias . '.deleted' => 'now()'), $conditions)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Returns true if a record with the currently set ID exists(deleted=NULL).
+	 *
+	 * @param boolean $reset if true will force database query
+	 * @return boolean True if such a record exists
+	 * @access public
+	 */
+	function advExists($reset = false) {
+		if (is_array($reset)) {
+			extract($reset, EXTR_OVERWRITE);
+		}
+
+		if ($this->getID() === false || $this->useTable === false) {
+			return false;
+		}
+		if (!empty($this->__advExists) && $reset !== true) {
+			return $this->__advExists;
+		}
+		$conditions = array($this->alias . '.' . $this->primaryKey => $this->getID(), $this->alias . '.deleted' => NULL);
+		$query = array('conditions' => $conditions, 'recursive' => -1, 'callbacks' => false);
+
+		if (is_array($reset)) {
+			$query = array_merge($query, $reset);
+		}
+		return $this->__advExists = ($this->find('count', $query) > 0);
 	}
 
 }

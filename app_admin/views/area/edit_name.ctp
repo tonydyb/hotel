@@ -41,7 +41,7 @@
 				</select>
 			</div>
 			<div style="float:left"><?php echo $form->input('area name'); ?></div>
-			<div style="float:left"><?php echo $form->submit('登録'); ?></div>
+			<div style="float:left"><?php echo $form->submit(); ?></div>
 			<?php echo $form->end();?>
 		</div>
 

@@ -6,6 +6,8 @@ class AreaController extends AppController {
 	var $uses = array('Area', 'Page', 'AreaLanguage', 'Language', 'AreaLinkCountry', 'AreaLinkCity', 'Country', 'City');
 	var $components = array('RequestHandler', 'SelectGetter');
 
+	//var $needAuth = true;	// ログイン必須のフラグ
+
 	/**
 	 * エリア一覧画面
 	 */
@@ -47,10 +49,17 @@ class AreaController extends AppController {
 	 * @param $id
 	 */
 	function edit($id = null) {
-		if (!$id && empty($this->data)) {
+		if ((!$id && empty($this->data))) {
 			$this->Session->setFlash(__('Invalid Area', true));
 			$this->redirect(array('action' => 'index'));
 		}
+
+		//既に削除されたのレコードは編集できません
+		if(!$this->Area->find('count', array( 'conditions' => array('area.id' => !$id ? $this->data['Area']['id']:$id, 'area.deleted' => NULL)))) {
+			$this->Session->setFlash(__('Invalid Area', true), 'default', array('class' => 'error'));
+			$this->redirect(array('action' => 'index'));
+		}
+
 		if (!empty($this->data)) {
 			if ($this->Area->save($this->data)) {
 				$this->Session->setFlash(__('The Area has been saved', true));
@@ -64,18 +73,35 @@ class AreaController extends AppController {
 		}
 	}
 
-//	function delete($id = null) {
-//		if (!$id) {
-//			$this->Session->setFlash(__('Invalid id for Area', true));
-//			$this->redirect(array('action' => 'index'));
-//		}
-//		if ($this->Area->del($id)) {
-//			$this->Session->setFlash(__('Area deleted', true));
-//			$this->redirect(array('action' => 'index'));
-//		}
-//		$this->Session->setFlash(__('The Area could not be deleted. Please, try again.', true));
-//		$this->redirect(array('action' => 'index'));
-//	}
+	function delete($id = null) {
+		if (!$id) {
+			$this->Session->setFlash(__('Invalid id for Area', true));
+			$this->redirect(array('action' => 'index'));
+		}
+
+		$this->Area->begin();	// Start transaction
+		if ($this->Area->advDel($id)) {
+			if ($this->AreaLanguage->advDelAll(array('AreaLanguage.area_id' => $id))
+				&& $this->AreaLinkCountry->advDelAll(array('AreaLinkCountry.area_id' => $id))
+				&& $this->AreaLinkCity->advDelAll(array('AreaLinkCity.area_id' => $id))
+				/*
+				 && $this->AreaLinkState->advDelAll(array('AreaLinkState.area_id' => $id))
+				 && $this->AreaLinkTown->advDelAll(array('AreaLinkTown.area_id' => $id))
+				 */) {
+
+				$this->Area->commit();	// Persist the data
+
+				$this->Session->setFlash(__('Area deleted', true));
+
+				//$this->redirect(array('action' => 'index'));
+			} else {
+				$this->Area->rollback();
+			}
+		} else {
+			$this->Session->setFlash(__('The Area could not be deleted. Please, try again.', true));
+			$this->redirect(array('action' => 'index'));
+		}
+	}
 
 	/**
 	 * エリア名前編集画面
@@ -87,13 +113,13 @@ class AreaController extends AppController {
 			$this->redirect(array('action' => 'index'));
 		}
 
-		$this->set('names', $this->Area->query("select Area.id, Area.code, Language.name, AreaLanguage.name from area as Area
-													left join (select * from area_language) as AreaLanguage on Area.id=AreaLanguage.area_id
-													left join (select language.id as id, LanguageLanguage.name as name from language
-																left join (select * from language_language where iso_language_id=" . $this->getIsoId() . ") as LanguageLanguage on LanguageLanguage.language_id = language.id) as Language on Language.id=AreaLanguage.language_id
-													where Area.id=$id"));
+		$this->set('names', $this->Area->query("select Area.id, Area.code, Language.name, AreaLanguage.name from (select * from area where isnull(area.deleted)) as Area
+													left join (select * from area_language where isnull(area_language.deleted)) as AreaLanguage on Area.id=AreaLanguage.area_id
+													left join (select language.id as id, LanguageLanguage.name as name from (select * from language where isnull(language.deleted)) as language
+																left join (select * from language_language where iso_language_id=" . $this->getIsoId() . " and isnull(language_language.deleted)) as LanguageLanguage on LanguageLanguage.language_id = language.id) as Language on Language.id=AreaLanguage.language_id
+													where Area.id=$id and isnull(Area.deleted)"));
 
-		$this->set('languages', $this->SelectGetter->getLanguage());
+		$this->set('languages', $this->SelectGetter->getLanguageMin());
 	}
 
 	/**
@@ -149,13 +175,13 @@ class AreaController extends AppController {
 			$this->redirect(array('action' => 'index'));
 		}
 
-		$this->set('names', $this->Area->query("select Area.id, Area.code, AreaLinkCountry.id, Country.id, Country.name from area as Area
-													left join (select * from area_link_country) as AreaLinkCountry on Area.id=AreaLinkCountry.area_id
-													left join (select country.id as id, CountryLanguage.name_long as name from country
-																left join (select * from country_language where language_id=" . $this->getIsoId() . ") as CountryLanguage on CountryLanguage.country_id = country.id) as Country on Country.id=AreaLinkCountry.country_id
-													where Area.id=$id"));
+		$this->set('names', $this->Area->query("select Area.id, Area.code, AreaLinkCountry.id, Country.id, Country.name from (select * from area where isnull(area.deleted)) as Area
+													left join (select * from area_link_country where isnull(area_link_country.deleted)) as AreaLinkCountry on Area.id=AreaLinkCountry.area_id
+													left join (select country.id as id, CountryLanguage.name_long as name from (select * from country where isnull(country.deleted)) as country
+																left join (select * from country_language where language_id=" . $this->getIsoId() . " and isnull(country_language.deleted)) as CountryLanguage on CountryLanguage.country_id = country.id) as Country on Country.id=AreaLinkCountry.country_id
+													where Area.id=$id and isnull(Area.deleted) order by Country.name"));
 
-		$this->set('area_link_country', $this->Area->AreaLinkCountry->findAll("area_id=$id"));
+		//$this->set('area_link_country', $this->Area->AreaLinkCountry->findAll("area_id=$id and isnull(AreaLinkCountry.deleted)"));
 		$this->set('countries', $this->SelectGetter->getCountry());
 
 		$this->Session->write('area_id', $id);
@@ -217,13 +243,13 @@ class AreaController extends AppController {
 			$this->redirect(array('action' => 'index'));
 		}
 
-		$this->set('names', $this->Area->query("select Area.id, Area.code, AreaLinkCity.id, City.id, City.name from area as Area
-													left join (select * from area_link_city) as AreaLinkCity on Area.id=AreaLinkCity.area_id
-													left join (select city.id as id, CityLanguage.name as name from city
-																left join (select * from city_language where language_id=" . $this->getIsoId() . ") as CityLanguage on CityLanguage.city_id = city.id) as City on City.id=AreaLinkCity.city_id
-													where Area.id=$id"));
+		$this->set('names', $this->Area->query("select Area.id, Area.code, AreaLinkCity.id, City.id, City.name from (select * from area where isnull(area.deleted)) as Area
+													left join (select * from area_link_city where isnull(area_link_city.deleted)) as AreaLinkCity on Area.id=AreaLinkCity.area_id
+													left join (select city.id as id, CityLanguage.name as name from (select * from city where isnull(city.deleted)) as city
+																left join (select * from city_language where language_id=" . $this->getIsoId() . " and isnull(city_language.deleted)) as CityLanguage on CityLanguage.city_id = city.id) as City on City.id=AreaLinkCity.city_id
+													where Area.id=$id and isnull(Area.deleted) order by City.name "));
 
-		$this->set('area_link_city', $this->Area->AreaLinkCity->findAll("area_id=$id"));
+		$this->set('area_link_city', $this->Area->AreaLinkCity->findAll("area_id=$id and isnull(AreaLinkCity.deleted)"));
 
 		$tmpArr = $this->SelectGetter->getCountry();
 		$countries = array();

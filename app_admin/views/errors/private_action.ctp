@@ -1,0 +1,1 @@
+<p><?php __('This is a private method.') ?></p>

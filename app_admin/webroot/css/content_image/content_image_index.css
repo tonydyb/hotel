@@ -1,0 +1,19 @@
+@charset "UTF-8";
+
+img{border:none;}
+
+/*  */
+
+#screenshot{
+	position:absolute;
+	border:0px solid #ccc;
+	background:#333;
+	padding:0px;
+	display:none;
+	color:#fff;
+	}
+
+/*  */
+
+/*  */
+

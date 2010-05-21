@@ -380,7 +380,31 @@ div#main table.no_border, tr.no_border, td.no_border, th.no_border {
 	font-size : 10pt;
 }
 
+.color_hotpink {
+	background-color : hotpink;
+}
 
+.color_greenyellow {
+	background-color : greenyellow;
+}
+
+.color_silver {
+	background-color : silver;
+}
+
+.color_rosybrown {
+	background-color : rosybrown;
+}
+
+.color_silver_no_border {
+	border : 0px none blask;
+	border-style : none none none none;
+	background-color : silver;
+}
+
+.color_orangered {
+	color : orangered;
+}
 
 /********************************************************************/
 
