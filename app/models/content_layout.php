@@ -3,11 +3,39 @@ class ContentLayout extends AppModel {
 
 	var $name = 'ContentLayout';
 	var $validate = array(
-		'language_id' => array('numeric'),
-		'carrier_type_id' => array('numeric'),
-		'name' => array('notempty'),
-		'alias' => array('notempty'),
-		'title' => array('notempty')
+		'language_id' => array(
+			'numeric' =>
+				array(
+					'rule' => 'numeric',
+				),
+		),
+		'carrier_type_id' => array(
+			'numeric' =>
+				array(
+					'rule' => 'numeric',
+				),
+		),
+		'name' => array(
+			'notEmpty' =>
+				array(
+					'rule' => 'notEmpty',
+					'last' => true,
+				),
+		),
+		'alias' => array(
+			'notEmpty' =>
+				array(
+					'rule' => 'notEmpty',
+					'last' => true,
+				),
+		),
+		'title' => array(
+			'notEmpty' =>
+				array(
+					'rule' => 'notEmpty',
+					'last' => true,
+				),
+		)
 	);
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed

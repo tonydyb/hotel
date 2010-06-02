@@ -3,7 +3,13 @@ class Area extends AppModel {
 
 	var $name = 'Area';
 	var $validate = array(
-		'code' => array('notempty')
+		'code' => array(
+			'notEmpty' =>
+				array(
+					'rule' => 'notEmpty',
+					'last' => true,
+				),
+		)
 	);
 
 	var $hasMany = array(

@@ -15,7 +15,7 @@
 ?>
 </td>
 <td id="language">
-<?php echo $html->link(__('パスワード変更', true), ''); ?>
+<?php echo $html->link(__('パスワード変更', true), '/login/change_password/'); ?>
 </td>
 <td id="language">
 <?php echo $html->link(__('ログアウト', true), '/login/logoff/'); ?>

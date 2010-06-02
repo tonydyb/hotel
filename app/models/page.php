@@ -26,24 +26,6 @@ class Page extends AppModel {
 	}
 
 	/**
-	 * エリア一覧sql
-	 */
-	function getSqlListArea($view_iso = DEFAULT_ISO_ID, $code = null) {
-		if(!$code) {
-			$sql = " select area.id as id, area.code, area_language.name as name from area left join (select * from area_language where area_language.language_id=$view_iso and isnull(area_language.deleted)) as area_language on area.id=area_language.area_id ";
-			$condition = " where isnull(area.deleted) ";
-			$sql .= $condition;
-		} else {
-			$sql = " select area.id as id, area.code, area_language.name as name from area left join (select * from area_language where area_language.language_id=$view_iso and isnull(area_language.deleted)) as area_language on area.id=area_language.area_id ";
-			$condition = " where area.code like '%$code%' ";
-			$condition .= " and isnull(area.deleted) ";
-			$sql .= $condition;
-		}
-
-		return $sql;
-	}
-
-	/**
 	 * 国一覧sql
 	 */
 	function getSqlListCountry($view_iso = DEFAULT_ISO_ID, $code = null) {
@@ -193,6 +175,14 @@ class Page extends AppModel {
 	function getSqlListDiscount() {
 		$sql = " select ContentCss.id as id, ContentCss.language_id as language_id, Language.iso_code, LanguageLanguage.name, ContentCss.carrier_type_id as carrier_type_id, CarrierType.name, ContentCss.alias, ContentCss.created, ContentCss.updated, ContentCss.deleted from content_css as ContentCss left join (select * from language_language where language_language.iso_language_id=$view_iso and isnull(language_language.deleted)) as LanguageLanguage on ContentCss.language_id=LanguageLanguage.language_id left join (select * from carrier_type where isnull(carrier_type.deleted)) as CarrierType on ContentCss.carrier_type_id=CarrierType.id left join (select * from language where isnull(language.deleted)) as Language on ContentCss.language_id=Language.id ";
 		$condition = " where isnull(ContentCss.deleted) ";
+		$sql .= $condition;
+
+		return $sql;
+	}
+
+	function getSqlListHotelAgent($view_iso = DEFAULT_ISO_ID, $code = null) {
+		$sql = "select HotelAgent.*, CountryLanguage.name_long as name from hotel_agent as HotelAgent left join (select * from country_language where country_language.language_id=$view_iso and isnull(country_language.deleted)) as CountryLanguage on HotelAgent.country_id = CountryLanguage.country_id ";
+		$condition = " where isnull(HotelAgent.deleted) ";
 		$sql .= $condition;
 
 		return $sql;

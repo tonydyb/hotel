@@ -4,11 +4,36 @@ class Discount extends AppModel {
 	var $name = 'Discount';
 	var $validate = array(
 		'name' => array('notempty'),
-		'discount_item_id' => array('numeric'),
-		'discount_item_val' => array('numeric'),
-		'discount_type_id' => array('numeric'),
-		'amount' => array('decimal'),
-		'sort' => array('numeric'),
+		'discount_item_id' => array(
+			'numeric' =>
+				array(
+					'rule' => 'numeric',
+				),
+		),
+		'discount_item_val' => array(
+			'numeric' =>
+				array(
+					'rule' => 'numeric',
+				),
+		),
+		'discount_type_id' => array(
+			'numeric' =>
+				array(
+					'rule' => 'numeric',
+				),
+		),
+		'amount' => array(
+			'numeric' =>
+				array(
+					'rule' => 'numeric',
+				),
+		),
+		'sort' => array(
+			'numeric' =>
+				array(
+					'rule' => 'numeric',
+				),
+		),
 		'start_date' => array('date'),
 		'end_date' => array('date')
 	);

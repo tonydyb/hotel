@@ -1,8 +1,14 @@
 <?php
-	echo $html->css('themes/base/jquery.ui.all');
-	echo $javascript->link('ui/jquery.ui.core');
-	echo $javascript->link('ui/jquery.ui.widget');
-	echo $javascript->link('ui/jquery.ui.datepicker');
+	echo $html->css('themes/redmond/jquery-ui-1.8.1.custom');
+	echo $javascript->link('discount/jquery-ui-1.8.1.custom.min');
+	//echo $javascript->link('ui/jquery.ui.core');
+	//echo $javascript->link('ui/jquery.ui.widget');
+	//echo $javascript->link('ui/jquery.ui.datepicker');
+
+	echo $javascript->link('ui/i18n/jquery.ui.datepicker-ja');
+	echo $javascript->link('ui/i18n/jquery.ui.datepicker-zh-TW');
+	echo $javascript->link('ui/i18n/jquery.ui.datepicker-zh-CN');
+	echo $javascript->link('ui/i18n/jquery.ui.datepicker-en-GB');
 
 	echo $javascript->link('discount/discount_add');
 ?>
@@ -41,7 +47,7 @@
 			<td>
 				<select id="Discount/discount_item_id" name="data[Discount][discount_item_id]">
 					<?php foreach ($discount_items as $discount_item) {?>
-						<option value="<?php echo $discount_item['DiscountItem']['id']; ?>" <?php if (isset($this->data['DiscountItem']['id'])) { echo $discount_item['DiscountItem']['id']==$this->data['DiscountItem']['id']?"selected='selected'":""; } ?>><?php echo $discount_item['DiscountItem']['code']; ?></option>
+						<option value="<?php echo $discount_item['DiscountItem']['id']; ?>" <?php if (isset($this->data['Discount']['discount_item_id'])) { echo $discount_item['DiscountItem']['id']==$this->data['Discount']['discount_item_id']?"selected='selected'":""; } ?>><?php echo $discount_item['DiscountItem']['code']; ?></option>
 					<?php } ?>
 				</select>
 			</td>
@@ -66,7 +72,7 @@
 			<td>
 				<select id="Discount/discount_type_id" name="data[Discount][discount_type_id]">
 					<?php foreach ($discount_types as $discount_type) {?>
-						<option value="<?php echo $discount_type['DiscountType']['id']; ?>" <?php if (isset($this->data['DiscountType']['id'])) { echo $discount_type['DiscountType']['id']==$this->data['DiscountType']['id']?"selected='selected'":""; } ?>><?php echo $discount_type['DiscountType']['code']; ?></option>
+						<option value="<?php echo $discount_type['DiscountType']['id']; ?>" <?php if (isset($this->data['Discount']['discount_type_id'])) { echo $discount_type['DiscountType']['id']==$this->data['Discount']['discount_type_id']?"selected='selected'":""; } ?>><?php echo $discount_type['DiscountType']['code']; ?></option>
 					<?php } ?>
 				</select>
 			</td>
@@ -84,18 +90,21 @@
 					)
 				));
 			?>
+			<!-- <label class="comment"><?php echo __('decimal') . ": 2.0"; ?></label> -->
 			</td>
 		</tr>
 		<tr>
 			<th style="text-align:left"><label><?php __('Start date');?></label></th>
 			<td>
-			<?php echo $html->tag('input', null, array('id' => 'DiscountStartDate', 'name' => 'data[Discount][start_date]')); ?>
+				<?php echo $html->tag('input', null, array('id' => 'DiscountStartDate', 'name' => 'data[Discount][start_date]', 'value' => $this->data['Discount']['start_date'])); ?>
+				<!-- <label class="comment">yyyy-mm-dd</label> -->
 			</td>
 		</tr>
 		<tr>
 			<th style="text-align:left"><label><?php __('End date');?></label></th>
 			<td>
-			<?php echo $html->tag('input', null, array('id' => 'DiscountEndDate', 'name' => 'data[Discount][end_date]')); ?>
+				<?php echo $html->tag('input', null, array('id' => 'DiscountEndDate', 'name' => 'data[Discount][end_date]', 'value' => $this->data['Discount']['end_date'])); ?>
+				<!-- <label class="comment">yyyy-mm-dd</label> -->
 			</td>
 		</tr>
 		</table>
@@ -116,3 +125,8 @@
 	</div><!-- contents end -->
 	<?php echo $this->renderElement('footer'); ?>
 </div><!-- top end -->
+
+
+<?php
+	echo $html->tag('hidden', null, array('id'=>'viewIso', 'value'=> $session->read('view_iso')));
+?>

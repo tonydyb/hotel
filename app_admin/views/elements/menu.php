@@ -9,7 +9,7 @@
 		<li><?php echo $html->link(__('エリア管理', true), '/area/index/'); ?></li>
 		<li><?php echo $html->link(__('国管理', true), '/country/index/'); ?></li>
 		<li><?php echo $html->link(__('都市管理', true), '/city/index/'); ?></li>
-		<li><a href="adm_hotels_list.html"><?php __('ホテル管理') ?></a></li>
+		<li><?php echo $html->link(__('ホテル管理', true), '/hotel/init/'); ?></li>
 		<li><a href="adm_tags_list.html"><?php __('タグ管理') ?></a></li>
 		<li><a href="adm_destination_upload_edit.html"><?php __('DESTINATION<br />一括登録') ?></a></li>
 		<li><a href="adm_hotel_kuoni_upload_edit.html"><?php __('ホテル一括登録') ?></a></li>
@@ -21,7 +21,7 @@
 		<li><?php echo $html->link(__('料金設定', true), '/discount/index/'); ?></li>
 		<li><?php echo $html->link(__('エイジェント管理', true), '/hotel_agent/index/'); ?></li>
 		<li><a href="adm_email_tpl_edit.html"><?php __('メールテンプレート編集') ?></a></li>
-		<li><a href="adm_tpl_edit5.html"><?php __('提出書類編集') ?></a></li>
+		<li><?php echo $html->link(__('提出書類編集', true), '/content_document/index/'); ?></li>
 		<li><?php echo $html->link(__('メディア管理', true), '/media/index/'); ?></li>
 		<li><a href="adm_sales_summary_credit1.html"><?php __('売上集計<br />(入金ベース)') ?></a></li>
 		<li><a href="adm_sales_summary_credit2.html"><?php __('売上集計<br />(申込ベース)') ?></a></li>

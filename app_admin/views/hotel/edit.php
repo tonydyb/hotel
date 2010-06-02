@@ -56,9 +56,24 @@ $script .= '
 		<?php echo $this->renderElement('menu'); ?>
 		<div id="main">
 
-			<?php echo $form->create('Hotel', array('type' => 'post', 'action' => '/save' ,'name' => 'form_hotel_edit', 'url'=>array('controller'=>'hotel'))); ?>
+			<?php echo $form->create('Hotel', array('type' => 'post', 'enctype' => 'multipart/form-data', 'action' => '/save' ,'name' => 'form_hotel_edit', 'url'=>array('controller'=>'hotel'))); ?>
 
-				<h2><a id="mail"><?php echo __('ホテル編集') ?></a></h2>
+				<div class="rgiht-menu">
+					<a href="#hotel"><?php echo __('ホテル') ?></a><br />
+					<a href="#room"><?php echo __('部屋') ?></a><br />
+					<a href="#image"><?php echo __('画像') ?></a><br />
+					<a href="#policy"><?php echo __('キャンセルポリシー') ?></a><br />
+					<a href="#contact"><?php echo __('緊急連絡先') ?></a><br />
+					<?php $message1 = __('保存してよろしいですか。', true); ?>
+					<?php echo $form->button(__('データ保存',true), array('div' => false, 'onclick' => 'regist_by_name(\'form_hotel_edit\', \'/app_admin/hotel/save\', \'' . $message1 . '\');')); ?>
+				</div>
+
+
+				<h2><a name="hotel"></a><?php echo __('ホテル編集') ?></h2>
+				<p>
+					<?php $message1 = __('保存してよろしいですか。', true); ?>
+					<?php echo $form->button(__('データ保存',true), array('div' => false, 'onclick' => 'regist_by_name(\'form_hotel_edit\', \'/app_admin/hotel/save\', \'' . $message1 . '\');')); ?>
+				</p>
 				<p>
 					<table>
 						<tr>
@@ -71,10 +86,13 @@ $script .= '
 										$opt[trim($lang['ViewLanguage']['ll_id'])] = $lang['ViewLanguage']['name'];
 										if (is_null($default_id) && $lang['ViewLanguage']['iso_code'] == $default_iso_code) { $default_id = $lang['ViewLanguage']['ll_id']; }
 									}
-									$HotelLanguage['language_id'] = empty($HotelLanguage['language_id']) ? $default_iso_code : $HotelLanguage['language_id'];
-									echo ($form->input('HotelLanguage.language_id', array('type' => 'select', 'options' => $opt, 'label'=>false, 'div' => false, 'selected' => $HotelLanguage['language_id'])));
+									$HotelLanguage['language_id'] = empty($HotelLanguage['language_id']) ? $default_id : $HotelLanguage['language_id'];
+									echo __('※登録データをどの言語のときに表示するか。<br />');
+									echo $form->input('HotelLanguage.language_id', array('type' => 'select', 'options' => $opt, 'label'=>false, 'div' => false, 'selected' => $HotelLanguage['language_id']));
+									echo '<br />';
+									echo __('<div class="color_orangered">※編集時に現在と違う言語でのデータ登録の際に押してください。<br />　選択した言語で既にデータが存在する場合、再読み込みされます。</div>');
+									echo $form->button(__('保存言語変更',true), array('div' => false, 'onclick' => 'regist_no_message(\'form_hotel_edit\', \'/app_admin/hotel/change_language/\');'));
 									echo $form->error('HotelLanguage.language_id');
-									echo __('※登録データをどの言語のときに表示するか。');
 								?>
 							</td>
 						</tr>
@@ -83,8 +101,10 @@ $script .= '
 							<td>
 								<?php
 									echo $Hotel['id'];
-									echo $form->input('Hotel.id', array('type' => 'hidden', 'label'=>false, 'div' => false, 'selected' => $Hotel['id']));
-									echo $form->input('HotelLanguage.id', array('type' => 'hidden', 'label'=>false, 'div' => false, 'selected' => $HotelLanguage['id']));
+									echo $form->input('Hotel.id', array('type' => 'hidden', 'label'=>false, 'div' => false, 'value' => $Hotel['id']));
+									echo $form->input('Hotel.town_id', array('type' => 'hidden', 'label'=>false, 'div' => false, 'value' => $Hotel['town_id']));
+									echo $form->input('HotelLanguage.id', array('type' => 'hidden', 'label'=>false, 'div' => false, 'value' => $HotelLanguage['id']));
+									echo $form->input('HotelLanguage.hotel_id', array('type' => 'hidden', 'label'=>false, 'div' => false, 'value' => $HotelLanguage['hotel_id']));
 								?>
 							</td>
 						</tr>
@@ -97,7 +117,7 @@ $script .= '
 										$opt[trim($ar['al']['area_id'])] = $ar['al']['name'];
 									}
 									$Hotel['area_id'] = empty($Hotel['area_id']) ? DEFAULT_SELECTED_VALUE_ZERO : $Hotel['area_id'];
-									echo ($form->input('Hotel.area_id', array('type' => 'select', 'options' => $opt, 'label'=>false, 'div' => false, 'selected' => $Hotel['area_id'])));
+									echo $form->input('Hotel.area_id', array('type' => 'select', 'options' => $opt, 'label'=>false, 'div' => false, 'selected' => $Hotel['area_id']));
 									echo $form->error('Hotel.area_id');
 								?>
 							</td>
@@ -111,7 +131,7 @@ $script .= '
 										$opt[trim($cr['cl']['country_id'])] = $cr['cl']['name_long'];
 									}
 									$Hotel['country_id'] = empty($Hotel['country_id']) ? DEFAULT_SELECTED_VALUE_ZERO : $Hotel['country_id'];
-									echo ($form->input('Hotel.country_id', array('type' => 'select', 'options' => $opt, 'label'=>false, 'div' => false, 'selected' => $Hotel['country_id'])));
+									echo $form->input('Hotel.country_id', array('type' => 'select', 'options' => $opt, 'label'=>false, 'div' => false, 'selected' => $Hotel['country_id'], 'error'=>false));
 									echo $form->error('Hotel.country_id');
 								?>
 							</td>
@@ -125,7 +145,7 @@ $script .= '
 										$opt[trim($st['sl']['state_id'])] = $st['sl']['name'];
 									}
 									$Hotel['state_id'] = empty($Hotel['state_id']) ? DEFAULT_SELECTED_VALUE_ZERO : $Hotel['state_id'];
-									echo ($form->input('Hotel.state_id', array('type' => 'select', 'options' => $opt, 'label'=>false, 'div' => false, 'selected' => $Hotel['state_id'])));
+									echo $form->input('Hotel.state_id', array('type' => 'select', 'options' => $opt, 'label'=>false, 'div' => false, 'selected' => $Hotel['state_id'],'error'=>false));
 									echo $form->error('Hotel.state_id');
 								?>
 							</td>
@@ -139,7 +159,7 @@ $script .= '
 										$opt[trim($cy['cl']['city_id'])] = $cy['cl']['name'];
 									}
 									$Hotel['city_id'] = empty($Hotel['city_id']) ? DEFAULT_SELECTED_VALUE_ZERO : $Hotel['city_id'];
-									echo ($form->input('Hotel.city_id', array('type' => 'select', 'options' => $opt, 'label'=>false, 'div' => false, 'selected' => $Hotel['city_id'])));
+									echo $form->input('Hotel.city_id', array('type' => 'select', 'options' => $opt, 'label'=>false, 'div' => false, 'selected' => $Hotel['city_id'],'error'=>false));
 									echo $form->error('Hotel.city_id');
 								?>
 							</td>
@@ -181,6 +201,20 @@ $script .= '
 							</td>
 						</tr>
 						<tr>
+							<th><?php echo __('グレード'); ?></th>
+							<td>
+								<?php
+									$opt = array();
+									foreach ($hotel_grade as $tmp) {
+										$opt[trim($tmp['hgl']['hotel_grade_id'])] = $tmp['hgl']['name'];
+									}
+									$Hotel['hotel_grade_id'] = empty($Hotel['hotel_grade_id']) ? DEFAULT_SELECTED_VALUE_ZERO : $Hotel['hotel_grade_id'];
+									echo $form->input('Hotel.hotel_grade_id', array('type' => 'select', 'options' => $opt, 'label'=>false, 'div' => false, 'selected' => $Hotel['hotel_grade_id']));
+									echo $form->error('Hotel.hotel_grade_id');
+								?>
+							</td>
+						</tr>
+						<tr>
 							<th><?php echo __('スターレート'); ?></th>
 							<td>
 								<?php
@@ -193,7 +227,7 @@ $script .= '
 										$opt[$i] = $star;
 									}
 									$Hotel['star_rate'] = empty($Hotel['star_rate']) ? DEFAULT_SELECTED_VALUE_ZERO : $Hotel['star_rate'];
-									echo ($form->input('Hotel.star_rate', array('type' => 'select', 'options' => $opt, 'label'=>false, 'div' => false, 'selected' => $Hotel['star_rate'])));
+									echo $form->input('Hotel.star_rate', array('type' => 'select', 'options' => $opt, 'label'=>false, 'div' => false, 'selected' => $Hotel['star_rate']));
 									echo $form->error('Hotel.star_rate');
 								?>
 							</td>
@@ -294,6 +328,7 @@ $script .= '
 								<?php
 									echo $form->hour('Hotel.checkin', true, $Hotel['checkin']['hour'], array(), true);
 									echo $form->minute('Hotel.checkin', $Hotel['checkin']['min'], array(), true);
+									echo $form->error('Hotel.checkin');
 								?>
 							</td>
 						</tr>
@@ -303,6 +338,7 @@ $script .= '
 								<?php
 									echo $form->hour('Hotel.checkout', true, $Hotel['checkout']['hour'], array(), true);
 									echo $form->minute('Hotel.checkout', $Hotel['checkout']['min'], array(), true);
+									echo $form->error('Hotel.checkout');
 								?>
 							</td>
 						</tr>
@@ -311,22 +347,8 @@ $script .= '
 							<td>
 								<?php
 									$opt = array(DISPLAY_STAT_EXIST=>__('表示', true), DISPLAY_STAT_NOTEXIST=>__('非表示', true));
-									echo ($form->input('Hotel.display_stat', array('type' => 'select', 'options' => $opt, 'label'=>false, 'div' => false, 'selected' => $Hotel['display_stat'])));
+									echo $form->input('Hotel.display_stat', array('type' => 'select', 'options' => $opt, 'label'=>false, 'div' => false, 'selected' => $Hotel['display_stat']));
 									echo $form->error('Hotel.display_stat');
-								?>
-							</td>
-						</tr>
-						<tr>
-							<th><?php echo __('ホテル使用言語'); ?></th>
-							<td>
-								<?php
-									$opt = array();
-									foreach ($language as $lang) {
-										$opt[trim($lang['ViewLanguage']['ll_id'])] = $lang['ViewLanguage']['name'];
-									}
-									$Hotel['language_id'] = empty($Hotel['language_id']) ? DEFAULT_SELECTED_VALUE_ZERO : $Hotel['language_id'];
-									echo ($form->input('Hotel.language_id', array('type' => 'select', 'options' => $opt, 'empty'=>'', 'label'=>false, 'div' => false, 'selected' => $Hotel['language_id'])));
-									echo $form->error('Hotel.language_id');
 								?>
 							</td>
 						</tr>
@@ -351,8 +373,9 @@ $script .= '
 												if (isset($HotelLinkFacility[$idx])) {
 													$opt = array(DISPLAY_STAT_NOTEXIST=>__('無', true), $HotelLinkFacility[$idx]['hotel_link_facility']['facility_id']=>__('有', true), );
 													$select = empty($HotelLinkFacility[$idx]['hotel_link_facility']['hotel_facility_id']) ? DISPLAY_STAT_NOTEXIST : $HotelLinkFacility[$idx]['hotel_link_facility']['facility_id'];
-													echo ($form->input('HotelLinkFacility.'.$idx.'.hotel_facility_id', array('type' => 'select', 'options' => $opt, 'label'=>false, 'div' => false, 'selected' => $select)));
+													echo $form->input('HotelLinkFacility.'.$idx.'.hotel_facility_id', array('type' => 'select', 'options' => $opt, 'label'=>false, 'div' => false, 'selected' => $select));
 													echo $form->input('HotelLinkFacility.'.$idx.'.id', array('type' => 'hidden', 'label'=>false, 'div' => false, 'value' => $HotelLinkFacility[$idx]['hotel_link_facility']['id']));
+													echo $form->input('HotelLinkFacility.'.$idx.'.hotel_id', array('type' => 'hidden', 'label'=>false, 'div' => false, 'value' => $HotelLinkFacility[$idx]['hotel_link_facility']['hotel_id']));
 												}
 												echo '</td>';
 												$idx++;
@@ -370,6 +393,7 @@ $script .= '
 					<?php
 						$add_opt = array('1'=>'1', '2'=>'2', '3'=>'3', '4'=>'4', '5'=>'5', '6'=>'6', '7'=>'7', '8'=>'8', '9'=>'9', '10'=>'10',);
 						$bath_opt = array(DISPLAY_STAT_NOTEXIST=>__('無', true), DISPLAY_STAT_EXIST=>__('有', true), );
+						$agent_opt = array();
 						$grade_opt = array();
 						$room_type_opt = array();
 						$smoke_opt = array();
@@ -377,8 +401,11 @@ $script .= '
 						$breakfast_opt = array();
 						$currency_opt = array();
 
-						foreach ($hotel_grade as $tmp) {
-							$grade_opt[trim($tmp['hgl']['hotel_grade_id'])] = $tmp['hgl']['name'];
+						foreach ($hotel_agent as $tmp) {
+							$agent_opt[trim($tmp['hotel_agent']['id'])] = $tmp['hotel_agent']['name'];
+						}
+						foreach ($room_grade as $tmp) {
+							$grade_opt[trim($tmp['rgl']['room_grade_id'])] = $tmp['rgl']['name'];
 						}
 						foreach ($room_bed as $tmp) {
 							$room_type_opt[trim($tmp['rbl']['room_bed_id'])] = $tmp['rbl']['name'];
@@ -398,81 +425,138 @@ $script .= '
 					?>
 				</p>
 				<p>
+					<a name="room"></a>
 					<table>
 						<tr>
 							<th><?php echo __('部屋情報'); ?></th>
 							<td>
 								<table>
 									<tr>
+										<th class="font-size10pt"><?php echo __('削除'); ?></th>
+										<th class="font-size10pt"><?php echo __('ホールセラー'); ?></th>
 										<th class="font-size10pt"><?php echo __('部屋名'); ?></th>
 										<th class="font-size10pt"><?php echo __('グレード'); ?></th>
 										<th class="font-size10pt"><?php echo __('部屋タイプ'); ?></th>
-										<th class="font-size10pt"><?php echo __('風呂'); ?></th>
-										<th class="font-size10pt"><?php echo __('喫煙'); ?></th>
 										<th class="font-size10pt"><?php echo __('食事'); ?></th>
 										<th class="font-size10pt"><?php echo __('朝食'); ?></th>
-										<th class="font-size10pt"><?php echo __('価格'); ?></th>
-										<th class="font-size10pt"><?php echo __('手数料'); ?></th>
-										<th class="font-size10pt"><?php echo __('備考'); ?></th>
-										<th class="font-size10pt"><?php echo __('削除'); ?></th>
+										<th class="font-size10pt"><?php echo __('風呂'); ?></th>
+										<th class="font-size10pt"><?php echo __('喫煙'); ?></th>
+										<th class="font-size10pt"><?php echo __('部屋設備'); ?></th>
 									</tr>
 									<?php for($room_count = 0; $room_count < count($HotelRoom); $room_count++) {?>
 										<tr>
 											<td>
 												<?php
+													$option = array('value' => DELETE_FLAG_DELETE, 'checked' => $HotelRoom[$room_count]['delete']);
+													echo $form->checkbox('HotelRoom.'.$room_count.'.delete', null, $option);
+												?>
+											</td>
+											<td>
+												<?php
+													$HotelRoom[$room_count]['hotel_agent_id'] = empty($HotelRoom[$room_count]['hotel_agent_id']) ? DEFAULT_SELECTED_VALUE_ZERO : $HotelRoom[$room_count]['hotel_agent_id'];
+													echo $form->input('HotelRoom.'.$room_count.'.hotel_agent_id', array('type' => 'select', 'options' => $agent_opt, 'label'=>false, 'div' => false, 'selected' => $HotelRoom[$room_count]['hotel_agent_id']));
+													echo $form->error('HotelRoom.'.$room_count.'.hotel_agent_id');
+													?>
+											</td>
+											<td>
+												<?php
 													echo $form->text('HotelRoomLanguage.'.$room_count.'.name', array('size' => '15', 'value'=>$HotelRoomLanguage[$room_count]['name']));
 													echo $form->error('HotelRoomLanguage.'.$room_count.'.name');
-													echo ($form->input('HotelRoom.'.$room_count.'.id', array('type' => 'hidden', 'label'=>false, 'div' => false, 'selected' => $HotelRoom[$room_count]['id'])));
-													echo ($form->input('HotelRoomLanguage.'.$room_count.'.id', array('type' => 'hidden', 'label'=>false, 'div' => false, 'selected' => $HotelRoomLanguage[$room_count]['id'])));
+													echo $form->input('HotelRoom.'.$room_count.'.id', array('type' => 'hidden', 'label'=>false, 'div' => false, 'value' => $HotelRoom[$room_count]['id']));
+													echo $form->input('HotelRoom.'.$room_count.'.hotel_id', array('type' => 'hidden', 'label'=>false, 'div' => false, 'value' => $HotelRoom[$room_count]['hotel_id']));
+													echo $form->input('HotelRoom.'.$room_count.'.point', array('type' => 'hidden', 'label'=>false, 'div' => false, 'value' => $HotelRoom[$room_count]['point']));
+													echo $form->input('HotelRoomLanguage.'.$room_count.'.id', array('type' => 'hidden', 'label'=>false, 'div' => false, 'value' => $HotelRoomLanguage[$room_count]['id']));
+													echo $form->input('HotelRoomLanguage.'.$room_count.'.language_id', array('type' => 'hidden', 'label'=>false, 'div' => false, 'value' => $HotelRoomLanguage[$room_count]['language_id']));
+													echo $form->input('HotelRoomLanguage.'.$room_count.'.hotel_room_id', array('type' => 'hidden', 'label'=>false, 'div' => false, 'value' => $HotelRoomLanguage[$room_count]['hotel_room_id']));
 												?>
 											</td>
 											<td>
 												<?php
 													$HotelRoom[$room_count]['room_grade_id'] = empty($HotelRoom[$room_count]['room_grade_id']) ? DEFAULT_SELECTED_VALUE_ZERO : $HotelRoom[$room_count]['room_grade_id'];
-													echo ($form->input('HotelRoom.'.$room_count.'.room_grade_id', array('type' => 'select', 'options' => $grade_opt, 'label'=>false, 'div' => false, 'selected' => $HotelRoom[$room_count]['room_grade_id'])));
+													echo $form->input('HotelRoom.'.$room_count.'.room_grade_id', array('type' => 'select', 'options' => $grade_opt, 'label'=>false, 'div' => false, 'selected' => $HotelRoom[$room_count]['room_grade_id']));
 													echo $form->error('HotelRoom.'.$room_count.'.room_grade_id');
 												?>
 											</td>
 											<td>
 												<?php
 													$HotelRoom[$room_count]['room_bed_id'] = empty($HotelRoom[$room_count]['room_bed_id']) ? DEFAULT_SELECTED_VALUE_ZERO : $HotelRoom[$room_count]['room_bed_id'];
-													echo ($form->input('HotelRoom.'.$room_count.'.room_bed_id', array('type' => 'select', 'options' => $room_type_opt, 'label'=>false, 'div' => false, 'selected' => $HotelRoom[$room_count]['room_bed_id'])));
+													echo $form->input('HotelRoom.'.$room_count.'.room_bed_id', array('type' => 'select', 'options' => $room_type_opt, 'label'=>false, 'div' => false, 'selected' => $HotelRoom[$room_count]['room_bed_id']));
 													echo $form->error('HotelRoom.'.$room_count.'.room_bed_id');
 												?>
 											</td>
 											<td>
 												<?php
-													$HotelRoom[$room_count]['room_bath_id'] = empty($HotelRoom[$room_count]['room_bath_id']) ? DEFAULT_SELECTED_VALUE_ZERO : $HotelRoom[$room_count]['room_bath_id'];
-													echo ($form->input('HotelRoom.'.$room_count.'.room_bath_id', array('type' => 'select', 'options' => $bath_opt, 'label'=>false, 'div' => false, 'selected' => $HotelRoom[$room_count]['room_bath_id'])));
-													echo $form->error('HotelRoom.'.$room_count.'.room_bath_id');
-												?>
-											</td>
-											<td>
-												<?php
-													$HotelRoom[$room_count]['smoking_id'] = empty($HotelRoom[$room_count]['smoking_id']) ? DEFAULT_SELECTED_VALUE_ZERO : $HotelRoom[$room_count]['smoking_id'];
-													echo ($form->input('HotelRoom.'.$room_count.'.smoking_id', array('type' => 'select', 'options' => $smoke_opt, 'label'=>false, 'div' => false, 'selected' => $HotelRoom[$room_count]['smoking_id'])));
-													echo $form->error('HotelRoom.'.$room_count.'.smoking_id');
-												?>
-											</td>
-											<td>
-												<?php
 													$HotelRoom[$room_count]['meal_type_id'] = empty($HotelRoom[$room_count]['meal_type_id']) ? DEFAULT_SELECTED_VALUE_ZERO : $HotelRoom[$room_count]['meal_type_id'];
-													echo ($form->input('HotelRoom.'.$room_count.'.meal_type_id', array('type' => 'select', 'options' => $meal_opt, 'label'=>false, 'div' => false, 'selected' => $HotelRoom[$room_count]['meal_type_id'])));
+													echo $form->input('HotelRoom.'.$room_count.'.meal_type_id', array('type' => 'select', 'options' => $meal_opt, 'label'=>false, 'div' => false, 'selected' => $HotelRoom[$room_count]['meal_type_id']));
 													echo $form->error('HotelRoom.'.$room_count.'.meal_type_id');
 												?>
 											</td>
 											<td>
 												<?php
 													$HotelRoom[$room_count]['breakfast_type_id'] = empty($HotelRoom[$room_count]['breakfast_type_id']) ? DEFAULT_SELECTED_VALUE_ZERO : $HotelRoom[$room_count]['breakfast_type_id'];
-													echo ($form->input('HotelRoom.'.$room_count.'.breakfast_type_id', array('type' => 'select', 'options' => $breakfast_opt, 'label'=>false, 'div' => false, 'selected' => $HotelRoom[$room_count]['breakfast_type_id'])));
+													echo $form->input('HotelRoom.'.$room_count.'.breakfast_type_id', array('type' => 'select', 'options' => $breakfast_opt, 'label'=>false, 'div' => false, 'selected' => $HotelRoom[$room_count]['breakfast_type_id']));
 													echo $form->error('HotelRoom.'.$room_count.'.breakfast_type_id');
 												?>
 											</td>
 											<td>
 												<?php
+													$HotelRoom[$room_count]['room_bath_id'] = empty($HotelRoom[$room_count]['room_bath_id']) ? DEFAULT_SELECTED_VALUE_ZERO : $HotelRoom[$room_count]['room_bath_id'];
+													echo $form->input('HotelRoom.'.$room_count.'.room_bath_id', array('type' => 'select', 'options' => $bath_opt, 'label'=>false, 'div' => false, 'selected' => $HotelRoom[$room_count]['room_bath_id']));
+													echo $form->error('HotelRoom.'.$room_count.'.room_bath_id');
+												?>
+											</td>
+											<td>
+												<?php
+													$HotelRoom[$room_count]['smoking_id'] = empty($HotelRoom[$room_count]['smoking_id']) ? DEFAULT_SELECTED_VALUE_ZERO : $HotelRoom[$room_count]['smoking_id'];
+													echo $form->input('HotelRoom.'.$room_count.'.smoking_id', array('type' => 'select', 'options' => $smoke_opt, 'label'=>false, 'div' => false, 'selected' => $HotelRoom[$room_count]['smoking_id']));
+													echo $form->error('HotelRoom.'.$room_count.'.smoking_id');
+												?>
+											</td>
+											<td rowspan="3" class="font-size10pt">
+												<?php
+													$col_max = 8;	// 内部テーブル横方向MAX
+													$row_max = count($HotelRoomLinkRoomFacility[$room_count]) / $col_max;	// 内部テーブル 縦方向最大値を算出 商
+													$idx = 0; //現在の配列番号
+													if (!empty($HotelRoomLinkRoomFacility[$room_count])) {
+														echo '<table>';
+														for ($i = 0; $i < $row_max; $i++) {
+															echo '<tr class="font-size10pt">';
+															for ($j = 0; $j < $col_max; $j++) {
+																if (isset($HotelRoomLinkRoomFacility[$room_count][$idx])) {
+																	echo '<th class="font-size10pt">'.$HotelRoomLinkRoomFacility[$room_count][$idx]['room_link_facility']['facility_name'].'</th>';
+																} else {
+																	echo '<th></th>';
+																}
+																echo '<td class="font-size10pt">';
+																if (isset($HotelRoomLinkRoomFacility[$room_count][$idx])) {
+																	$opt = array(DISPLAY_STAT_NOTEXIST=>__('無', true), $HotelRoomLinkRoomFacility[$room_count][$idx]['room_link_facility']['facility_id']=>__('有', true), );
+																	$select = empty($HotelRoomLinkRoomFacility[$room_count][$idx]['room_link_facility']['room_facility_id']) ? DISPLAY_STAT_NOTEXIST : $HotelRoomLinkRoomFacility[$room_count][$idx]['room_link_facility']['facility_id'];
+																	echo $form->input('HotelRoomLinkRoomFacility.'.$room_count.'.'.$idx.'.room_facility_id', array('type' => 'select', 'options' => $opt, 'label'=>false, 'div' => false, 'selected' => $select));
+																	echo $form->input('HotelRoomLinkRoomFacility.'.$room_count.'.'.$idx.'.id', array('type' => 'hidden', 'label'=>false, 'div' => false, 'value' => $HotelRoomLinkRoomFacility[$room_count][$idx]['room_link_facility']['id']));
+																	echo $form->input('HotelRoomLinkRoomFacility.'.$room_count.'.'.$idx.'.hotel_room_id', array('type' => 'hidden', 'label'=>false, 'div' => false, 'value' => $HotelRoomLinkRoomFacility[$room_count][$idx]['room_link_facility']['hotel_room_id']));
+																}
+																echo '</td>';
+																$idx++;
+															}
+															echo '</tr>';
+														}
+														echo '</table>';
+													}
+												?>
+											</td>
+										</tr>
+										<tr>
+											<th colspan="4" class="font-size10pt"><?php echo __('価格'); ?></th>
+											<th class="font-size10pt"><?php echo __('手数料'); ?></th>
+											<th colspan="4" class="font-size10pt"><?php echo __('備考'); ?></th>
+
+										</tr>
+										<tr>
+											<td colspan="4">
+												<?php
 													echo $form->text('HotelRoom.'.$room_count.'.price', array('size' => '15', 'value'=>$HotelRoom[$room_count]['price']));
 													$HotelRoom[$room_count]['currency_id'] = empty($HotelRoom[$room_count]['currency_id']) ? DEFAULT_SELECTED_VALUE_ZERO : $HotelRoom[$room_count]['currency_id'];
-													echo ($form->input('HotelRoom.'.$room_count.'.currency_id', array('type' => 'select', 'options' => $currency_opt, 'label'=>false, 'div' => false, 'selected' => $HotelRoom[$room_count]['currency_id'])));
+													echo $form->input('HotelRoom.'.$room_count.'.currency_id', array('type' => 'select', 'options' => $currency_opt, 'label'=>false, 'div' => false, 'selected' => $HotelRoom[$room_count]['currency_id']));
 													echo $form->error('HotelRoom.'.$room_count.'.price');
 													echo $form->error('HotelRoom.'.$room_count.'.currency_id');
 												?>
@@ -483,56 +567,16 @@ $script .= '
 													echo $form->error('HotelRoom.'.$room_count.'.commission');
 												?>
 											</td>
-											<td rowspan="2">
+											<td colspan="4">
 												<?php
-													echo $form->textarea('HotelRoomLanguage.'.$room_count.'.comment', array('cols' => '40', 'rows' => '3', 'wrap' => 'off', 'label' => false, 'value'=>$HotelRoomLanguage[$room_count]['comment']));
+													echo $form->text('HotelRoomLanguage.'.$room_count.'.comment', array('size' => '80', 'value'=>$HotelRoomLanguage[$room_count]['comment']));
 													echo $form->error('HotelRoomLanguage.'.$room_count.'.comment');
 												?>
 											</td>
-											<td rowspan="2">
-												<?php
-													$option = array('value' => '1', 'checked' => $HotelRoom[$room_count]['delete']);
-													echo $form->checkbox('HotelRoom.'.$room_count.'.delete', null, $option);
-												?>
-											</td>
-											<tr>
-												<th class="font-size10pt"><?php echo __('部屋設備'); ?></th>
-												<td colspan="8" class="font-size10pt">
-													<?php
-														$col_max = 8;	// 内部テーブル横方向MAX
-														$row_max = count($HotelRoomLinkRoomFacility[$room_count]) / $col_max;	// 内部テーブル 縦方向最大値を算出 商
-														$idx = 0; //現在の配列番号
-														if (!empty($HotelRoomLinkRoomFacility[$room_count])) {
-															echo '<table>';
-															for ($i = 0; $i < $row_max; $i++) {
-																echo '<tr class="font-size10pt">';
-																for ($j = 0; $j < $col_max; $j++) {
-																	if (isset($HotelRoomLinkRoomFacility[$room_count][$idx])) {
-																		echo '<th class="font-size10pt">'.$HotelRoomLinkRoomFacility[$room_count][$idx]['room_link_facility']['facility_name'].'</th>';
-																	} else {
-																		echo '<th></th>';
-																	}
-																	echo '<td class="font-size10pt">';
-																	if (isset($HotelRoomLinkRoomFacility[$room_count][$idx])) {
-																		$opt = array(DISPLAY_STAT_NOTEXIST=>__('無', true), $HotelRoomLinkRoomFacility[$room_count][$idx]['room_link_facility']['facility_id']=>__('有', true), );
-																		$select = empty($HotelRoomLinkRoomFacility[$room_count][$idx]['room_link_facility']['room_facility_id']) ? DISPLAY_STAT_NOTEXIST : $HotelRoomLinkRoomFacility[$room_count][$idx]['room_link_facility']['facility_id'];
-																		echo ($form->input('HotelRoomLinkRoomFacility.'.$room_count.'.'.$idx.'.room_facility_id', array('type' => 'select', 'options' => $opt, 'label'=>false, 'div' => false, 'selected' => $select)));
-																		echo $form->input('HotelRoomLinkRoomFacility.'.$room_count.'.'.$idx.'.id', array('type' => 'hidden', 'label'=>false, 'div' => false, 'value' => $HotelRoomLinkRoomFacility[$room_count][$idx]['room_link_facility']['id']));
-																	}
-																	echo '</td>';
-																	$idx++;
-																}
-																echo '</tr>';
-															}
-															echo '</table>';
-														}
-													?>
-												</td>
-											</tr>
 										</tr>
 									<?php } ?>
 								</table>
-								<?php echo ($form->input('AddData.add_room', array('type' => 'select', 'options' => $add_opt, 'label'=>false, 'div' => false, 'selected' => DEFAULT_SELECTED_VALUE_ONE))); ?>
+								<?php echo $form->input('AddData.add_room', array('type' => 'select', 'options' => $add_opt, 'label'=>false, 'div' => false, 'selected' => DEFAULT_SELECTED_VALUE_ONE)); ?>
 								部屋
 								<?php echo $form->button(__('追加',true), array('div' => false, 'onclick' => 'regist_no_message(\'form_hotel_edit\', \'/app_admin/hotel/add_room/\');')); ?>
 							</td>
@@ -540,11 +584,12 @@ $script .= '
 					</table>
 				</p>
 				<p>
+					<a name="image"></a>
 					<table>
 						<tr>
 							<th><?php echo __('画像'); ?></th>
-							<td>
-								<div class="color_orangered"><?php echo __('※画像ファイルのアップ時に当画面に戻ってきた場合、画像ファイルは選択しなおしになります。'); ?></div>
+							<td class="font-size10pt">
+								<div class="color_orangered"><?php echo __('※「データ保存」成功時以外は画像ファイルは破棄されます。'); ?></div>
 								<table>
 									<tr>
 										<th class="font-size10pt"><?php echo __('画像説明'); ?></th>
@@ -559,8 +604,13 @@ $script .= '
 												<?php
 													echo $form->text('HotelImageLanguage.'.$pic_count.'.name', array('size' => '20', 'value'=>$HotelImageLanguage[$pic_count]['name']));
 													echo $form->error('HotelImageLanguage.'.$pic_count.'.name');
-													echo ($form->input('HotelImage.'.$pic_count.'.id', array('type' => 'hidden', 'label'=>false, 'div' => false, 'selected' => $HotelImage[$pic_count]['id'])));
-													echo ($form->input('HotelImageLanguage.'.$pic_count.'.id', array('type' => 'hidden', 'label'=>false, 'div' => false, 'selected' => $HotelImageLanguage[$pic_count]['id'])));
+													echo $form->input('HotelImage.'.$pic_count.'.id', array('type' => 'hidden', 'label'=>false, 'div' => false, 'value' => $HotelImage[$pic_count]['id']));
+													echo $form->input('HotelImage.'.$pic_count.'.hotel_id', array('type' => 'hidden', 'label'=>false, 'div' => false, 'value' => $HotelImage[$pic_count]['hotel_id']));
+													echo $form->input('HotelImage.'.$pic_count.'.image_url', array('type' => 'hidden', 'label'=>false, 'div' => false, 'value' => $HotelImage[$pic_count]['image_url']));
+													echo $form->input('HotelImage.'.$pic_count.'.image_file', array('type' => 'hidden', 'label'=>false, 'div' => false, 'value' => $HotelImage[$pic_count]['image_file']));
+													echo $form->input('HotelImageLanguage.'.$pic_count.'.id', array('type' => 'hidden', 'label'=>false, 'div' => false, 'value' => $HotelImageLanguage[$pic_count]['id']));
+													echo $form->input('HotelImageLanguage.'.$pic_count.'.language_id', array('type' => 'hidden', 'label'=>false, 'div' => false, 'value' => $HotelImageLanguage[$pic_count]['language_id']));
+													echo $form->input('HotelImageLanguage.'.$pic_count.'.hotel_image_id', array('type' => 'hidden', 'label'=>false, 'div' => false, 'value' => $HotelImageLanguage[$pic_count]['hotel_image_id']));
 												?>
 											</td>
 											<td>
@@ -571,7 +621,8 @@ $script .= '
 											</td>
 											<td>
 												<?php
-													$img_path = $HotelImage[$pic_count]['image_url'].$HotelImage[$pic_count]['image_file'];
+//													$img_path = $HotelImage[$pic_count]['image_url'].$HotelImage[$pic_count]['image_file'];
+													$img_path = HOTEL_IMAGE_ROOT_PATH.$HotelImage[$pic_count]['image_url'].$HotelImage[$pic_count]['image_file'];
 													if (!empty($HotelImage[$pic_count]['image_url'])) {
 														echo '<img border="0" src="'.$img_path.'" width="50" height="50" alt="'.$HotelImageLanguage[$pic_count]['name'].'">';
 													}
@@ -579,7 +630,9 @@ $script .= '
 											</td>
 											<td>
 												<?php
-													echo $img_path;
+													if (!empty($HotelImage[$pic_count]['image_file'])) {
+														echo HOTEL_IMAGE_ROOT_PATH_ON_APP_USER.$HotelImage[$pic_count]['image_url'].$HotelImage[$pic_count]['image_file'];
+													}
 												?>
 											</td>
 											<td>
@@ -589,14 +642,14 @@ $script .= '
 											</td>
 											<td>
 												<?php
-													$option = array('value' => '1', 'checked' => $HotelImage[$pic_count]['delete']);
+													$option = array('value' => DELETE_FLAG_DELETE, 'checked' => $HotelImage[$pic_count]['delete']);
 													echo $form->checkbox('HotelImage.'.$pic_count.'.delete', null, $option);
 												?>
 											</td>
 										</tr>
 									<?php } ?>
 								</table>
-								<?php echo ($form->input('AddData.add_pic', array('type' => 'select', 'options' => $add_opt, 'label'=>false, 'div' => false, 'selected' => DEFAULT_SELECTED_VALUE_ONE))); ?>
+								<?php echo $form->input('AddData.add_pic', array('type' => 'select', 'options' => $add_opt, 'label'=>false, 'div' => false, 'selected' => DEFAULT_SELECTED_VALUE_ONE)); ?>
 								画像
 								<?php echo $form->button(__('追加',true), array('div' => false, 'onclick' => 'regist_no_message(\'form_hotel_edit\', \'/app_admin/hotel/add_pic/\');')); ?>
 							</td>
@@ -604,10 +657,11 @@ $script .= '
 					</table>
 				</p>
 				<p>
+					<a name="policy"></a>
 					<table>
 						<tr>
 							<th><?php echo __('キャンセル<br />ポリシー'); ?></th>
-							<td>
+							<td class="font-size10pt">
 								<div class="color_orangered"><?php echo __('※キャンセル期間：左側「0」で予約当日から。右側「0」でチェックイン当日まで。'); ?></div>
 								<table>
 									<tr>
@@ -630,10 +684,11 @@ $script .= '
 												<?php
 													echo $form->text('CancelCharge.'.$cancel_count.'.sort_no', array('size' => '2', 'value'=>$CancelCharge[$cancel_count]['sort_no']));
 													echo $form->error('CancelCharge.'.$cancel_count.'.sort_no');
-													echo $form->input('CancelCharge.'.$cancel_count.'.id', array('type' => 'hidden', 'label'=>false, 'div' => false, 'selected' => $CancelCharge[$cancel_count]['id']));
-												?>
+													echo $form->input('CancelCharge.'.$cancel_count.'.id', array('type' => 'hidden', 'label'=>false, 'div' => false, 'value' => $CancelCharge[$cancel_count]['id']));
+													echo $form->input('CancelCharge.'.$cancel_count.'.hotel_id', array('type' => 'hidden', 'label'=>false, 'div' => false, 'value' => $CancelCharge[$cancel_count]['hotel_id']));
+													?>
 											</td>
-											<td>
+											<td class="font-size10pt">
 												<?php
 													$attr = array('minYear' => MIN_REGIST_YEAR, 'maxYear' => date('Y')+1, 'separator' => ' / ', 'monthNames' => false);
 													echo $form->dateTime('CancelCharge.'.$cancel_count.'.term_from', 'YMD', 'NONE', $CancelCharge[$cancel_count]['term_from'], $attr, true);
@@ -657,7 +712,7 @@ $script .= '
 											<td class="font-size10pt">
 												<?php
 													$CancelCharge[$cancel_count]['charge_stat_id'] = empty($CancelCharge[$cancel_count]['charge_stat_id']) ? DEFAULT_SELECTED_VALUE_ONE : $CancelCharge[$cancel_count]['charge_stat_id'];
-													echo ($form->input('CancelCharge.'.$cancel_count.'.charge_stat_id', array('type' => 'select', 'options' => $cancel_opt, 'empty'=>'', 'label'=>false, 'div' => false, 'selected' => $CancelCharge[$cancel_count]['charge_stat_id'])));
+													echo $form->input('CancelCharge.'.$cancel_count.'.charge_stat_id', array('type' => 'select', 'options' => $cancel_opt, 'empty'=>'', 'label'=>false, 'div' => false, 'selected' => $CancelCharge[$cancel_count]['charge_stat_id']));
 													echo $form->text('CancelCharge.'.$cancel_count.'.charge_percent', array('size' => '2', 'value'=>$CancelCharge[$cancel_count]['charge_percent']));
 													echo __('％');
 													echo $form->error('CancelCharge.'.$cancel_count.'.charge_stat_id');
@@ -672,25 +727,26 @@ $script .= '
 											</td>
 											<td>
 												<?php
-													$option = array('value' => '1', 'checked' => $CancelCharge[$cancel_count]['delete']);
+													$option = array('value' => DELETE_FLAG_DELETE, 'checked' => $CancelCharge[$cancel_count]['delete']);
 													echo $form->checkbox('CancelCharge.'.$cancel_count.'.delete', null, $option);
 												?>
 											</td>
 										</tr>
 									<?php } ?>
 								</table>
-								<?php echo ($form->input('AddData.add_cancel', array('type' => 'select', 'options' => $add_opt, 'label'=>false, 'div' => false, 'selected' => DEFAULT_SELECTED_VALUE_ONE))); ?>
+								<?php echo $form->input('AddData.add_cancel', array('type' => 'select', 'options' => $add_opt, 'label'=>false, 'div' => false, 'selected' => DEFAULT_SELECTED_VALUE_ONE)); ?>
 								ポリシー
 								<?php echo $form->button(__('追加',true), array('div' => false, 'onclick' => 'regist_no_message(\'form_hotel_edit\', \'/app_admin/hotel/add_cancel/\');')); ?>
 							</td>
 						</tr>
-					<table>
+					</table>
 				</p>
 				<p>
+					<a name="contact"></a>
 					<table>
 						<tr>
 							<th><?php echo __('緊急連絡先'); ?></th>
-							<td>
+							<td class="font-size10pt">
 								<div class="color_orangered"><?php echo __('※英語で入力してください'); ?></div>
 								<table>
 									<?php
@@ -698,6 +754,8 @@ $script .= '
 										foreach ($area as $ar) {
 											$area_opt[trim($ar['al']['area_id'])] = $ar['al']['name'];
 										}
+										array_unshift($agent_opt, array('0'=>''));
+										$agent = '';
 										$delete = '';
 										$name = '';
 										$sort = '';
@@ -713,7 +771,15 @@ $script .= '
 										$tel = '';
 										$remark = '';
 										for ($hec_count = 0; $hec_count < count($HotelEmergencyContact); $hec_count++) {
-											$option = array('value' => '1', 'checked' => $HotelEmergencyContact[$hec_count]['delete']);
+											$agent .= '<td>';
+											$HotelEmergencyContact[$hec_count]['hotel_agent_id'] = empty($HotelEmergencyContact[$hec_count]['hotel_agent_id']) ? DEFAULT_SELECTED_VALUE_ZERO : $HotelEmergencyContact[$hec_count]['hotel_agent_id'];
+											$agent .= $form->input('HotelEmergencyContact.'.$hec_count.'.hotel_agent_id', array('type' => 'select', 'options' => $agent_opt, 'label'=>false, 'div' => false, 'selected' => $HotelEmergencyContact[$hec_count]['hotel_agent_id'],'error'=>false));
+											$agent .= $form->error('HotelEmergencyContact.'.$hec_count.'.hotel_agent_id');
+											$agent .= $form->input('HotelEmergencyContact.'.$hec_count.'.id', array('type' => 'hidden', 'label'=>false, 'div' => false, 'value' => $HotelEmergencyContact[$hec_count]['id']));
+											$agent .= $form->input('HotelEmergencyContact.'.$hec_count.'.hotel_id', array('type' => 'hidden', 'label'=>false, 'div' => false, 'value' => $HotelEmergencyContact[$hec_count]['hotel_id']));
+											$agent .= '</td>';
+
+											$option = array('value' => DELETE_FLAG_DELETE, 'checked' => $HotelEmergencyContact[$hec_count]['delete']);
 											$delete .= '<td>';
 											$delete .= $form->checkbox('HotelEmergencyContact.'.$hec_count.'.delete', null, $option);
 											$delete .= $form->error('HotelEmergencyContact.'.$hec_count.'.delete');
@@ -741,7 +807,7 @@ $script .= '
 											}
 											$country .= '<td>';
 											$HotelEmergencyContact[$hec_count]['country_id'] = empty($HotelEmergencyContact[$hec_count]['country_id']) ? DEFAULT_SELECTED_VALUE_ZERO : $HotelEmergencyContact[$hec_count]['country_id'];
-											$country .= $form->input('HotelEmergencyContact.'.$hec_count.'.country_id', array('type' => 'select', 'options' => $opt, 'label'=>false, 'div' => false, 'selected' => $HotelEmergencyContact[$hec_count]['country_id']));
+											$country .= $form->input('HotelEmergencyContact.'.$hec_count.'.country_id', array('type' => 'select', 'options' => $opt, 'label'=>false, 'div' => false, 'selected' => $HotelEmergencyContact[$hec_count]['country_id'],'error'=>false));
 											$country .= $form->error('HotelEmergencyContact.'.$hec_count.'.country_id');
 											$country .= '</td>';
 
@@ -751,7 +817,7 @@ $script .= '
 											}
 											$state .= '<td>';
 											$HotelEmergencyContact[$hec_count]['state_id'] = empty($HotelEmergencyContact[$hec_count]['state_id']) ? DEFAULT_SELECTED_VALUE_ZERO : $HotelEmergencyContact[$hec_count]['state_id'];
-											$state .= $form->input('HotelEmergencyContact.'.$hec_count.'.state_id', array('type' => 'select', 'options' => $opt, 'label'=>false, 'div' => false, 'selected' => $HotelEmergencyContact[$hec_count]['state_id']));
+											$state .= $form->input('HotelEmergencyContact.'.$hec_count.'.state_id', array('type' => 'select', 'options' => $opt, 'label'=>false, 'div' => false, 'selected' => $HotelEmergencyContact[$hec_count]['state_id'],'error'=>false));
 											$state .= $form->error('HotelEmergencyContact.'.$hec_count.'.state_id');
 											$state .= '</td>';
 
@@ -761,7 +827,7 @@ $script .= '
 											}
 											$city .= '<td>';
 											$HotelEmergencyContact[$hec_count]['city_id'] = empty($HotelEmergencyContact[$hec_count]['city_id']) ? DEFAULT_SELECTED_VALUE_ZERO : $HotelEmergencyContact[$hec_count]['city_id'];
-											$city .= $form->input('HotelEmergencyContact.'.$hec_count.'.city_id', array('type' => 'select', 'options' => $opt, 'label'=>false, 'div' => false, 'selected' => $HotelEmergencyContact[$hec_count]['city_id']));
+											$city .= $form->input('HotelEmergencyContact.'.$hec_count.'.city_id', array('type' => 'select', 'options' => $opt, 'label'=>false, 'div' => false, 'selected' => $HotelEmergencyContact[$hec_count]['city_id'],'error'=>false));
 											$city .= $form->error('HotelEmergencyContact.'.$hec_count.'.city_id');
 											$city .= '</td>';
 
@@ -846,56 +912,60 @@ $hec_script .= '
 									<tr>
 										<th class="font-size10pt"><?php echo __('削除'); ?></th>
 										<?php echo $delete; ?>
+									</tr>
 									<tr>
+										<th class="font-size10pt"><?php echo __('ホールセラー'); ?></th>
+										<?php echo $agent; ?>
+									</tr>
 									<tr>
 										<th class="font-size10pt"><?php echo __('連絡先名称'); ?></th>
 										<?php echo $name; ?>
-									<tr>
 									</tr>
+									<tr>
 										<th class="font-size10pt"><?php echo __('ソート'); ?></th>
 										<?php echo $sort; ?>
-									<tr>
 									</tr>
+									<tr>
 										<th class="font-size10pt"><?php echo __('エリア'); ?></th>
 										<?php echo $area; ?>
-									<tr>
 									</tr>
+									<tr>
 										<th class="font-size10pt"><?php echo __('国'); ?></th>
 										<?php echo $country; ?>
-									<tr>
 									</tr>
+									<tr>
 										<th class="font-size10pt"><?php echo __('州'); ?></th>
 										<?php echo $state; ?>
-									<tr>
 									</tr>
+									<tr>
 										<th class="font-size10pt"><?php echo __('都市'); ?></th>
 										<?php echo $city; ?>
-									<tr>
 									</tr>
+									<tr>
 										<th class="font-size10pt"><?php echo __('住所1'); ?></th>
 										<?php echo $adr1; ?>
-									<tr>
 									</tr>
+									<tr>
 										<th class="font-size10pt"><?php echo __('住所2'); ?></th>
 										<?php echo $adr2; ?>
-									<tr>
 									</tr>
+									<tr>
 										<th class="font-size10pt"><?php echo __('住所3'); ?></th>
 										<?php echo $adr3; ?>
-									<tr>
 									</tr>
+									<tr>
 										<th class="font-size10pt"><?php echo __('郵便番号'); ?></th>
 										<?php echo $post; ?>
-									<tr>
 									</tr>
+									<tr>
 										<th class="font-size10pt"><?php echo __('電話国番号'); ?></th>
 										<?php echo $prefix; ?>
-									<tr>
 									</tr>
+									<tr>
 										<th class="font-size10pt"><?php echo __('電話番号'); ?></th>
 										<?php echo $tel; ?>
-									<tr>
 									</tr>
+									<tr>
 										<th class="font-size10pt"><?php echo __('備考'); ?></th>
 										<?php echo $remark; ?>
 									</tr>
@@ -914,6 +984,10 @@ JSPROG
 	));
 //↑JSPROGの前に空白文字列とか入れるとエラーになる
 ?>
+				<p>
+					<?php $message1 = __('保存してよろしいですか。', true); ?>
+					<?php echo $form->button(__('データ保存',true), array('div' => false, 'onclick' => 'regist_by_name(\'form_hotel_edit\', \'/app_admin/hotel/save\', \'' . $message1 . '\');')); ?>
+				</p>
 			<?php echo $form->end(); ?>
 		</div> <!-- main end -->
 	</div><!-- contents end -->

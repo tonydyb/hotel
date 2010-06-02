@@ -3,10 +3,31 @@ class ContentBlock extends AppModel {
 
 	var $name = 'ContentBlock';
 	var $validate = array(
-		'language_id' => array('numeric'),
-		'carrier_type_id' => array('numeric'),
-		'name' => array('notempty'),
-		'alias' => array('notempty')
+		'language_id' => array(
+			'numeric' =>
+				array(
+					'rule' => 'numeric',
+				),
+		),
+		'carrier_type_id' => array(
+			'numeric' =>
+				array(
+					'rule' => 'numeric',
+				),
+		),
+		'name' => array(
+			'notEmpty' =>
+				array(
+					'rule' => 'notEmpty',
+					'last' => true,
+				),
+		),
+		'alias' => array(
+			'notEmpty' =>
+				array(
+					'rule' => 'notEmpty',
+				),
+		)
 	);
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed

@@ -20,9 +20,9 @@ var searchButtonClickedEventListener = function() {
         }
 
         if (searchStr == '') {
-            var action = '/hotel/app_admin/city/index';
+            var action = '/app_admin/city/index';
         } else {
-            var action = '/hotel/app_admin/city/index/'+searchStr;
+            var action = '/app_admin/city/index/'+searchStr;
         }
         $('form')
             .attr('action', action)

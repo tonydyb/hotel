@@ -25,9 +25,9 @@ var searchButtonClickedEventListener = function() {
         }
 
         if (searchStr == '') {
-            var action = '/hotel/app_admin/content_block/index';
+            var action = '/app_admin/content_block/index';
         } else {
-            var action = '/hotel/app_admin/content_block/index/'+searchStr;
+            var action = '/app_admin/content_block/index/'+searchStr;
         }
         $('form')
             .attr('action', action)

@@ -7,7 +7,7 @@ $(document).ready(function(){
 
 var uploadClickedEventListener = function() {
 	new AjaxUpload('uploadLink', {
-        action: '/hotel/app_admin/content_image/upload',
+        action: '/app_admin/content_image/upload',
 		data : {
 			'key1' : "This data won't",
 			'key2' : "be send because",
@@ -38,7 +38,7 @@ var uploadClickedEventListener = function() {
 
 			var str1 = $('#counter').text().split(" ");
 			$('#counter').text(str1[0] + ' ' + (parseInt(str1[1])+1) + ' ' +str1[2]);*/
-			window.location.replace("/hotel/app_admin/content_image/index");
+			window.location.replace("/app_admin/content_image/index");
 		}
 	});
 }
@@ -63,9 +63,9 @@ var searchButtonClickedEventListener = function() {
         }
 
         if (searchStr == '') {
-            var action = '/hotel/app_admin/content_image/index';
+            var action = '/app_admin/content_image/index';
         } else {
-            var action = '/hotel/app_admin/content_image/index/'+searchStr;
+            var action = '/app_admin/content_image/index/'+searchStr;
         }
         $('form')
             .attr('action', action)

@@ -18,15 +18,26 @@ class AreaController extends AppController {
 			$code = null;
 		}
 
-		$cond = $this->Page->getSqlListArea($this->getIsoId(), $code);
-		$this->paginate = array(
-				'conditions'=>$cond,
-				'order'=>'id ASC',
-				'limit'=>VIEW_MAX,
-				'recursive'=>0
-			);
+		$this->Area->contain('AreaLanguage');
+		$paginate = array(
+			'limit' => VIEW_MAX,
+			'order' => array(
+				'Area.id' => 'asc',
+        	)
+        	,'contain' => array(
+        		'AreaLanguage' => array(
+        			'fields' => array('name'),
+					'conditions' => array('AreaLanguage.language_id =' => $this->getIsoId(), 'AreaLanguage.deleted' => null)
+				)
+			)
+    	);
 
-		$this->set('areas', $this->paginate('Page'));
+    	if($code) {
+    		$this->set('areas', $this->paginate('Area', array('Area.code like' => "%$code%", 'Area.deleted' => null)));
+    	} else {
+    		$this->set('areas', $this->paginate('Area', array('Area.deleted' => null)));
+    	}
+
 	}
 
 	/**
@@ -73,6 +84,10 @@ class AreaController extends AppController {
 		}
 	}
 
+	/**
+	 * エリア削除
+	 * @param $id
+	 */
 	function delete($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid id for Area', true));
@@ -93,7 +108,7 @@ class AreaController extends AppController {
 
 				$this->Session->setFlash(__('Area deleted', true));
 
-				//$this->redirect(array('action' => 'index'));
+				$this->redirect(array('action' => 'index'));
 			} else {
 				$this->Area->rollback();
 			}

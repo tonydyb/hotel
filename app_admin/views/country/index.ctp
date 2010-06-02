@@ -15,10 +15,15 @@
 	<?php echo $this->renderElement('index_title', array("title" => __('Country'))); ?>
 
 	<div id="search">
-		<?php echo $form->create('Country'); ?>
-			<div style="float:left;padding-right:5px;"><?php echo $form->input('iso_code_a2'); ?></div>
-			<div style="float:left;padding-right:5px;"><?php echo $form->button('Search', array('type'=>'button', 'class'=>'searchBtn')); ?></div>
-		<?php echo $form->end(); ?>
+		<table>
+			<tr>
+				<th style="text-align:left"><label><?php __('iso_code_a2');?></label></th>
+				<td>
+					<?php echo $html->tag('input', null, array('id' => 'iso_code_a2', 'value' => isset($this->passedArgs['iso_code_a2']) ? $this->passedArgs['iso_code_a2']:'')); ?>
+				</td>
+				<td><a href="#" id="searchLink">Search</a></td>
+			</tr>
+		</table>
 	</div>
 	<div class="clear"></div>
 
@@ -27,11 +32,11 @@
 
 		<table class="listTable">
 		<tr>
-			<th><?php echo $paginator->sort(__('id'));?></th>
-			<th><?php echo $paginator->sort(__('iso_code_n'));?></th>
-			<th><?php echo $paginator->sort(__('iso_code_a2'));?></th>
-			<th><?php echo $paginator->sort(__('iso_code_a3'));?></th>
-			<th><?php echo $paginator->sort(__('name'));?></th>
+			<th><?php __('id');?></th>
+			<th><?php __('iso_code_n');?></th>
+			<th><?php __('iso_code_a2');?></th>
+			<th><?php __('iso_code_a3');?></th>
+			<th><?php __('name');?></th>
 			<th class="actions"><?php __('Edit');?></th>
 			<th class="actions"><?php __('Edit Name');?></th>
 		</tr>

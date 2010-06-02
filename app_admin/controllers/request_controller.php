@@ -542,10 +542,18 @@ class RequestController extends AppController {
 		$where = array();
 		// request
 		if (!empty($cnd['request_date_from']) && !empty($cnd['request_date_to'])) {
-			$where = array_merge($where, array('Request.request_date BETWEEN ? AND ?' => array(date($cnd['request_date_from']), date(strftime("%Y-%m-%d", strtotime("+1 day", strtotime($cnd['request_date_from'])))))));
+			$where = array_merge($where, array('Request.request_date BETWEEN ? AND ?' => array(date($cnd['request_date_from']), date(strftime("%Y-%m-%d", strtotime("+1 day", strtotime($cnd['request_date_to'])))))));
+		} else if (!empty($cnd['request_date_from'])) {
+			$where = array_merge($where, array('Request.request_date >= ?' => array(date($cnd['request_date_from']))));
+		} else if (!empty($cnd['request_date_to'])) {
+			$where = array_merge($where, array('Request.request_date < ?' => array(date(strftime("%Y-%m-%d", strtotime("+1 day", strtotime($cnd['request_date_to'])))))));
 		}
 		if (!empty($cnd['fix_date_from']) && !empty($cnd['fix_date_to'])) {
-			$where = array_merge($where, array('Request.fix_date BETWEEN ? AND ?' => array(date($cnd['fix_date_from']), date(strftime("%Y-%m-%d", strtotime("+1 day", strtotime($cnd['fix_date_from'])))))));
+			$where = array_merge($where, array('Request.fix_date BETWEEN ? AND ?' => array(date($cnd['fix_date_from']), date(strftime("%Y-%m-%d", strtotime("+1 day", strtotime($cnd['fix_date_to'])))))));
+		} else if (!empty($cnd['request_date_from'])) {
+			$where = array_merge($where, array('Request.fix_date >= ?' => array(date($cnd['fix_date_from']))));
+		} else if (!empty($cnd['request_date_to'])) {
+			$where = array_merge($where, array('Request.fix_date < ?' => array(date(strftime("%Y-%m-%d", strtotime("+1 day", strtotime($cnd['fix_date_to'])))))));
 		}
 		if (!empty($cnd['price'])) {
 			$where = array_merge($where, array("Request.price" => $cnd['price']));
@@ -568,12 +576,24 @@ class RequestController extends AppController {
 		// request_hotel
 		if (!empty($cnd['checkin_from']) && !empty($cnd['checkin_to'])) {
 			$where = array_merge($where, array('RequestHotel.checkin BETWEEN ? AND ?' => array(date($cnd['checkin_from']), date(strftime("%Y-%m-%d", strtotime("+1 day", strtotime($cnd['checkin_from'])))))));
+		} else if (!empty($cnd['checkin_from'])) {
+			$where = array_merge($where, array('RequestHotel.checkin >= ?' => array(date($cnd['checkin_from']))));
+		} else if (!empty($cnd['checkin_to'])) {
+			$where = array_merge($where, array('RequestHotel.checkin < ?' => array(date(strftime("%Y-%m-%d", strtotime("+1 day", strtotime($cnd['checkin_to'])))))));
 		}
 		if (!empty($cnd['checkout_from']) && !empty($cnd['checkout_to'])) {
 			$where = array_merge($where, array('RequestHotel.checkout BETWEEN ? AND ?' => array(date($cnd['checkout_from']), date(strftime("%Y-%m-%d", strtotime("+1 day", strtotime($cnd['checkout_from'])))))));
+		} else if (!empty($cnd['checkout_from'])) {
+			$where = array_merge($where, array('RequestHotel.checkout >= ?' => array(date($cnd['checkout_from']))));
+		} else if (!empty($cnd['checkout_to'])) {
+			$where = array_merge($where, array('RequestHotel.checkout < ?' => array(date(strftime("%Y-%m-%d", strtotime("+1 day", strtotime($cnd['checkout_to'])))))));
 		}
 		if (!empty($cnd['limit_date_from']) && !empty($cnd['limit_date_to'])) {
 			$where = array_merge($where, array('RequestHotel.limit_date BETWEEN ? AND ?' => array(date($cnd['limit_date_from']), date(strftime("%Y-%m-%d", strtotime("+1 day", strtotime($cnd['limit_date_from'])))))));
+		} else if (!empty($cnd['limit_date_from'])) {
+			$where = array_merge($where, array('RequestHotel.limit_date >= ?' => array(date($cnd['limit_date_from']))));
+		} else if (!empty($cnd['limit_date_to'])) {
+			$where = array_merge($where, array('RequestHotel.limit_date < ?' => array(date(strftime("%Y-%m-%d", strtotime("+1 day", strtotime($cnd['limit_date_to'])))))));
 		}
 		if (!empty($cnd['hotel_agent_id'])) {
 			$where = array_merge($where, array("RequestHotel.hotel_agent_id" => $cnd['hotel_agent_id']));

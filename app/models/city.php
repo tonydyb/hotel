@@ -4,7 +4,13 @@ class City extends AppModel {
 	var $name = 'City';
 	var $validate = array(
 		'country_id' => array('numeric'),
-		'code' => array('notempty')
+		'code' => array(
+			'notEmpty' =>
+				array(
+					'rule' => 'notEmpty',
+					'last' => true,
+				),
+		)
 	);
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed

@@ -1,7 +1,7 @@
 <?php
 	echo $javascript->link('content_image/content_image_index');
-	echo $javascript->link('ajaxupload');
-	echo $javascript->link('image_preview');
+	echo $javascript->link('content_image/ajaxupload');
+	echo $javascript->link('content_image/image_preview');
 	echo $html->css('content_image/content_image_index');
 ?>
 
@@ -79,11 +79,11 @@
 		<table class="listTable">
 		<tr>
 			<th class="actions"><?php __('Preview');?></th>
-			<th><?php echo $paginator->sort(__('language'));?></th>
-			<th><?php echo $paginator->sort(__('carrier_type'));?></th>
-			<th><?php echo $paginator->sort(__('alias'));?></th>
-			<th><?php echo $paginator->sort(__('type'));?></th>
-			<th><?php echo $paginator->sort(__('tag'));?></th>
+			<th><?php __('language');?></th>
+			<th><?php __('carrier_type');?></th>
+			<th><?php __('alias');?></th>
+			<th><?php __('type');?></th>
+			<th><?php __('tag');?></th>
 			<th class="actions"><?php __('Delete');?></th>
 		</tr>
 		<?php
@@ -96,7 +96,7 @@
 							($image['ContentImage']['carrier_type_id']==1 ? 'PC' : 'Mobile'),
 							$image['ContentImage']['alias'],
 							$image['ContentImage']['type'],
-							$html->tag('textarea', "<img src=\"" . ($image['ContentImage']['language_id']==0 ? '$common_image_path' : '$image_path') . "/" . $image['ContentImage']['alias'] . "\">", array('readOnly' => true, 'rows' => '1', 'cols' => '60')),
+							$html->tag('textarea', "<img src=\"" . ($image['ContentImage']['language_id']==0 ? '<?php echo $common_image_path ?>' : '<?php echo $image_path ?>') . "/" . $image['ContentImage']['alias'] . "\">", array('readOnly' => true, 'rows' => '2', 'cols' => '80')),
 							$html->link(__('Delete', true), array('action' => 'delete', $image['ContentImage']['id']), array('class' => 'deleteLink'), 'Are you sure?')
 						)
 					)

@@ -1,7 +1,7 @@
 <?php
 class LoginController extends AppController {
 	var $name = "Login";
-	var $uses = array('AdminUser');
+	var $uses = array('AdminUser', 'ChangePassword');
 	var $needAuth = true;	// ログイン必須のフラグ
 	var $helpers = array('Javascript');
 
@@ -49,6 +49,57 @@ class LoginController extends AppController {
 			}
 		} else {
 			$this->render('/login/index');
+		}
+	}
+
+	function change_password() {
+		$admin_user = $this->Session->read('auth');
+		$login_user = $this->get_password_change_skeleton();
+
+		$login_user['account'] = $admin_user[0]['AdminUser']['account'];
+		$this->set('AdminUser', $login_user);
+	}
+
+	function get_password_change_skeleton() {
+		$data = array();
+		$data['account'] = '';
+		$data['password'] = '';
+		$data['old_password'] = '';
+		$data['new_password1'] = '';
+		$data['new_password2'] = '';
+		return $data;
+	}
+
+	function change_password_submit() {
+		if (!empty($this->data)) {
+			$admin_user = $this->Session->read('auth');
+			$login_user = $this->data['ChangePassword'];
+			$login_user['old_password'] = $admin_user[0]['AdminUser']['password'];
+
+			$this->ChangePassword->create();
+			$this->ChangePassword->set($login_user);
+			if ($this->ChangePassword->validates($login_user)) {
+				$this->AdminUser->create();
+				$this->AdminUser->set($login_user);
+				$whitelist = array_keys($this->AdminUser->getColumnTypes());
+				$this->AdminUser->query(CHANGE_PASSWORD_SQL, array($login_user['new_password1'], $admin_user[0]['AdminUser']['id']));
+
+				$option['conditions'] = array('AdminUser.account' => $login_user['account'], 'AdminUser.password' => $login_user['new_password1']);
+				$admin_user = $this->AdminUser->find('all', $option);
+				if (!empty($admin_user)) {
+					// 値をセッションに格納
+					$this->Session->write('auth', $admin_user);
+				}
+			} else {
+				$this->set('AdminUser', $login_user);
+				$this->render('/login/change_password/');
+			}
+		} else {
+			$admin_user = $this->Session->read('auth');
+			$login_user = $this->get_password_change_skeleton();
+			$login_user['account'] = $admin_user[0]['AdminUser']['account'];
+			$this->set('AdminUser', $login_user);
+			$this->render('/login/change_password/');
 		}
 	}
 

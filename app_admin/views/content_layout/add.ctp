@@ -11,7 +11,7 @@
 		<div id="main">
 
 <div id="main_contents" >
-<?php echo $form->create('ContentLayout');?>
+<?php echo $form->createSingle('ContentLayout');?>
 	<fieldset class="fieldset">
  		<legend><?php __('Add Content Layout');?></legend>
 		<div>
@@ -145,8 +145,8 @@
 		</table>
 		</div>
 	</fieldset>
-	<div style="float:left;padding-right:5px;"><?php echo $form->button('Submit', array('type'=>'button', 'class'=>'submitBtn')); ?></div>
-<?php echo $form->end(); ?>
+	<div style="float:left;padding-right:5px;"><?php //echo $form->button('Submit', array('type'=>'button', 'class'=>'submitBtn')); ?></div>
+<?php echo $form->end('Submit');?>
 
 	<?php echo $this->renderElement('message'); ?>
 </div>

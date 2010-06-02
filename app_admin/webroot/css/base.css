@@ -406,6 +406,10 @@ div#main table.no_border, tr.no_border, td.no_border, th.no_border {
 	color : orangered;
 }
 
+.align_top {
+	vertical-align : top;
+}
+
 /********************************************************************/
 
 #main_contents {
@@ -457,6 +461,13 @@ div#main table.no_border, tr.no_border, td.no_border, th.no_border {
 	color : red;
 }
 
+.comment {
+	color : grey;
+}
+
+.formerror {
+	color : red;
+}
 /*.cake-sql-log { display: none; }*/
 
 /***************************************************************/

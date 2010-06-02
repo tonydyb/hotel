@@ -14,16 +14,26 @@
 <?php echo $form->create('Area');?>
 	<fieldset class="fieldset">
  		<legend><?php __('Add Area');?></legend>
-		<?php
-			echo $form->input('code', array(
-				'label' => __(''),
-				'div'=>'formfield',
-				'error' => array(
-					'wrap' => 'div',
-					'class' => 'formerror'
-					)
-				));
-		?>
+			<div>
+			<table>
+				<tr>
+					<th style="text-align:left"><label><?php __('Code');?></label></th>
+					<td>
+					<?php
+						echo $form->input('code', array(
+							'label' => false,
+							'div' => false,
+							'error' => array(
+								'wrap' => 'div',
+								'class' => 'formerror'
+							)
+						));
+					?>
+					<br/><label class="comment">シティエリア名前前に必ず'CITY_'を付けてください</label>
+					</td>
+				</tr>
+			</table>
+			</div>
 	</fieldset>
 <?php echo $form->end('Submit');?>
 

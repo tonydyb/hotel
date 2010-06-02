@@ -29,7 +29,6 @@
 	<meta http-equiv="Content-style-Type" content="text/css" />
 	<meta http-equiv="Content-Script-Type" content="text/javascript" />
 
-
 	<title>
 		<?php __('海外ホテル予約'); ?>
 	</title>
@@ -48,9 +47,8 @@
 		echo $scripts_for_layout;
 	?>
 </head>
-		<?php echo $content_for_layout; ?>
-
-
+<body>
+	<?php echo $content_for_layout; ?>
 <br />
 <br />
 <br />

@@ -11,7 +11,7 @@
 		<div id="main">
 
 <div id="main_contents" >
-<?php echo $form->create('ContentBlock');?>
+<?php echo $form->createSingle('ContentBlock');?>
 	<fieldset class="fieldset">
  		<legend><?php __('Add Content Block');?></legend>
 		<div>
@@ -59,8 +59,8 @@
 				'label' => false,
 				'div' => false,
 				'error' => array(
-				'wrap' => 'div',
-				'class' => 'formerror'
+					'wrap' => 'div',
+					'class' => 'formerror'
 					)
 				));
 			?>
@@ -80,8 +80,8 @@
 		</table>
 		</div>
 	</fieldset>
-	<div style="float:left;padding-right:5px;"><?php echo $form->button('Submit', array('type'=>'button', 'class'=>'submitBtn')); ?></div>
-<?php echo $form->end(); ?>
+	<div style="float:left;padding-right:5px;"><?php //echo $form->button('Submit', array('type'=>'button', 'class'=>'submitBtn')); ?></div>
+<?php echo $form->end('Submit');?>
 
 	<?php echo $this->renderElement('message'); ?>
 </div>

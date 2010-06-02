@@ -8,7 +8,7 @@ $(document).ready(function(){
 
 var uploadClickedEventListener = function() {
 	new AjaxUpload('uploadLink', {
-        action: '/hotel/app_admin/content_css/upload',
+        action: '/app_admin/content_css/upload',
 		data : {
 			'key1' : "This data won't",
 			'key2' : "be send because",
@@ -32,7 +32,7 @@ var uploadClickedEventListener = function() {
 			}
 		},
 		onComplete : function(file, response){
-			window.location.replace("/hotel/app_admin/content_css/index");
+			window.location.replace("/app_admin/content_css/index");
 		}
 	});
 }
@@ -57,9 +57,9 @@ var searchButtonClickedEventListener = function() {
         }
 
         if (searchStr == '') {
-            var action = '/hotel/app_admin/content_css/index';
+            var action = '/app_admin/content_css/index';
         } else {
-            var action = '/hotel/app_admin/content_css/index/'+searchStr;
+            var action = '/app_admin/content_css/index/'+searchStr;
         }
         $('form')
             .attr('action', action)

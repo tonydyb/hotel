@@ -19,12 +19,12 @@ $option_html = 'type: "POST", dataType: "html", timeout: 10000,';
 				<a href="#bord"><?php echo __('伝言板') ?></a><br />
 				<a href="#visitor"><?php echo __('お客様情報') ?></a><br />
 				<a href="#booking"><?php echo __('予約情報') ?></a><br />
-				<a href="#voucher"><?php echo __('領収書') ?></a><br />
+				<a href="#receipt"><?php echo __('領収書') ?></a><br />
 			</div>
 
 			<?php echo $form->create('Request', array('type' => 'post', 'action' => '/save' ,'name' => 'form_request_edit', 'url'=>array('controller'=>'request'))); ?>
 
-				<h2><a id="mail"><?php echo __('メール配信') ?></a></h2>
+				<h2><a id="mail"></a><?php echo __('メール配信') ?></h2>
 				<p>
 					<table>
 						<tr>
@@ -52,7 +52,7 @@ $option_html = 'type: "POST", dataType: "html", timeout: 10000,';
 					<table id="MailTemplateContents"></table>
 				</p>
 
-				<h2><a id="bord"><?php __('申込データ保存'); ?></a></h2>
+				<h2><a id="bord"></a><?php __('申込データ保存'); ?></h2>
 				<p>
 
 					<?php $message1 = __('保存してよろしいですか。', true); ?>
@@ -156,7 +156,7 @@ $option_html = 'type: "POST", dataType: "html", timeout: 10000,';
 					<br />
 				</p>
 
-				<h2><a id="visitor"><?php echo __('お客様情報(代表者)') ?></a></h2>
+				<h2><a id="visitor"></a><?php echo __('お客様情報(代表者)') ?></h2>
 				<p>
 
 					<table>
@@ -274,7 +274,7 @@ $option_html = 'type: "POST", dataType: "html", timeout: 10000,';
 
 
 
-				<h2><a id="booking"><?php echo __('予約情報') ?></a></h2>
+				<h2><a id="booking"></a><?php echo __('予約情報') ?></h2>
 				<p>
 					<?php
 						$pax_opt = array('1'=>'1', '2'=>'2', '3'=>'3', '4'=>'4', '5'=>'5', '6'=>'6', '7'=>'7', '8'=>'8', '9'=>'9', '10'=>'10',);
@@ -753,7 +753,7 @@ JSPROG
 
 					<table>
 						<tr>
-							<th colspan="2"><a id="voucher"><?php echo __('領収書') ?></a></th>
+							<th colspan="2"><a id="receipt"></a><?php echo __('領収書') ?></th>
 						</tr>
 						<tr>
 							<td colspan="2" class="align-center">

@@ -39,6 +39,8 @@
 class AppModel extends Model {
 
 
+	var $actsAs = array('Containable');
+
 	/**
 	 * Concatenate a field name with each validation error message in replaceValidationErrorMessagesI18n().
 	 * Field name is set with gettext __()
@@ -109,6 +111,9 @@ class AppModel extends Model {
 			'ssn'				=> __('ソーシャルセキュリティナンバー形式で入力してください。', true),
 			'url'				=> __('URL形式で入力してください。', true),
 			'userDefined'		=> __('入力値が正しくありません。', true),
+			'isUnique'			=> __('既に使用されています。', true),
+			'codeCheck'			=> __('半角英数字と記号のみ使用できます。', true),
+			'confirmPassword'	=> __('入力されたパスワードが一致しません。', true),
 		);
 
 		return $default_error_messages;
@@ -293,5 +298,103 @@ class AppModel extends Model {
 		return $this->__advExists = ($this->find('count', $query) > 0);
 	}
 
+	function numeric_check($check_ary) {
+		foreach ($check_ary as $check) {
+			if (empty($check)) {
+				return true;
+			}
+			return is_numeric($check);
+		}
+	}
+
+	function decimal_check($num, $places = 4) {
+		foreach ($num as $data) {
+			if (empty($data)) {
+				return true;
+			}
+
+			$regex = '/^[-+]?[0-9]*\.?[0-9]{0,'.$places.'}$/';
+			return preg_match($regex, $data);
+		}
+	}
+
+	function email_check($mail) {
+		foreach ($mail as $data) {
+			if (empty($data)) {
+				return true;
+			}
+
+			$regex = VALID_EMAIL;
+			return preg_match($regex, $data);
+		}
+	}
+
+	function phone_check($phone) {
+		foreach ($phone as $data) {
+			if (empty($data)) {
+				return true;
+			}
+
+			$regex = PHONE;
+			return preg_match($regex, $data);
+		}
+	}
+
+	function number_check($num) {
+		foreach ($num as $data) {
+			if (empty($data)) {
+				return true;
+			}
+
+			$regex = VALID_NUMBER;
+			return preg_match($regex, $data);
+		}
+	}
+
+	function alpha_numeric_check($data) {
+		foreach ($data as $d) {
+			if (empty($d)) {
+				return true;
+			}
+
+			$regex = ALPHA_NUMERIC;
+			return preg_match($regex, $d);
+		}
+	}
+
+	function code_check($data) {
+		foreach ($data as $d) {
+			if (empty($d)) {
+				return true;
+			}
+
+			$regex = HOTEL_CODE;
+			return preg_match($regex, $d);
+		}
+	}
+
+	function date_check($datetime, $format = 'Ymd') {
+		foreach ($datetime as $data) {
+			if (empty($datetime)) {
+				return true;
+			}
+
+			$tmpdate = $this->toArray($data);
+			return checkdate($tmpdate['month'], $tmpdate['day'], $tmpdate['year']);
+		}
+	}
+
+	function toArray($date = null, $isNullOK = false) {
+		$keys = array('year','month','day','hour','min','sec');
+
+		if (empty($date) && !$isNullOK) {
+			$date = date("Y-m-d H:i:s");
+		} else if(empty($date) && $isNullOK) {
+			return array_combine($keys, array('','','','','',''));
+		}
+
+		$values = sscanf($date, '%d-%d-%d %d:%d:%d');
+		return array_combine($keys, $values);
+	}
 }
 ?>

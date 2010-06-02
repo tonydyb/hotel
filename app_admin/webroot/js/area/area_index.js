@@ -6,13 +6,13 @@ $(document).ready(function(){
 
 
 var searchButtonClickedEventListener = function() {
-    $(".searchBtn").click(function () {
-        var searchStr = $("#AreaCode").val();
+    $("#searchLink").click(function () {
+        var searchStr = $("#code").val();
 
         if (searchStr == '') {
-            var action = '/hotel/app_admin/area/index';
+            var action = '/app_admin/area/index';
         } else {
-            var action = '/hotel/app_admin/area/index/code:'+searchStr;
+            var action = '/app_admin/area/index/code:'+searchStr;
         }
         $('form')
             .attr('action', action)

@@ -137,9 +137,6 @@ class CustomerUserController extends AppController {
 		if (!empty($cnd['mail_magazine_type_id'])) {
 			$where = array_merge($where, array("CustomerUser.mail_magazine_type_id" => $cnd['mail_magazine_type_id']));
 		}
-		if (!empty($cnd['addr_country_id'])) {
-			$where = array_merge($where, array("CustomerUser.addr_country_id" => $cnd['addr_country_id']));
-		}
 		if (!empty($cnd['customer_type_id'])) {
 			$where = array_merge($where, array("CustomerUser.customer_type_id" => $cnd['customer_type_id']));
 		}

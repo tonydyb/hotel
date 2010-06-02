@@ -286,6 +286,10 @@ class ListGetterComponent extends Object {
 		return $this->_controller->HotelGradeLanguage->query(HOTEL_GRADE_LIST_SQL, array($view_iso, ));
 	}
 
+	function getRoomGradeList($view_iso = DEFAULT_ISO_CODE) {
+		return $this->_controller->RoomGradeLanguage->query(ROOM_GRADE_LIST_SQL, array($view_iso, ));
+	}
+
 	function getRoomBedList($view_iso = DEFAULT_ISO_CODE) {
 		return $this->_controller->RoomBedLanguage->query(ROOM_BED_LIST_SQL, array($view_iso, ));
 	}
@@ -310,5 +314,19 @@ class ListGetterComponent extends Object {
 		return $this->_controller->HotelRoomLinkRoomFacility->query($sql, $args);
 	}
 
+	function getContentDocumentList($view_iso = DEFAULT_ISO_CODE, $branch_no = '1', $content_document_id = null) {
+		$add_sql1 = '';
+		$add_sql2 = '';
+		$args = array($view_iso);
+		if (isset($branch_no)) {
+			$add_sql2 .= sprintf(" AND content_document_language.branch_no IN (%s)", $branch_no);
+		}
+		if (!is_null($content_document_id)) {
+			$add_sql1 .= sprintf(" AND content_document.id = (%s)", $content_document_id);
+		}
+
+		$sql = sprintf(CONTENT_DOCUMENT_LIST_SQL, $add_sql1, $add_sql2);
+		return $this->_controller->ContentDocument->query($sql, $args);
+	}
 }
 ?>

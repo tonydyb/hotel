@@ -70,7 +70,8 @@
 							$contentBlock['CarrierType']['name'],
 							$contentBlock['LanguageLanguage']['name'],
 							array($html->link(__('Edit', true), array('action' => 'edit', $contentBlock['ContentBlock']['id'])), aa('class', 'actions')),
-							array($html->link(__('Delete', true), array('action' => 'delete', $contentBlock['ContentBlock']['id']), array('class' => 'deleteLink'), 'Are you sure?'), aa('class', 'actions'))						)
+							array($html->link(__('Delete', true), array('action' => 'delete', $contentBlock['ContentBlock']['id']), array('class' => 'deleteLink'), 'Are you sure?'), aa('class', 'actions'))
+						)
 					)
 				);
 			}

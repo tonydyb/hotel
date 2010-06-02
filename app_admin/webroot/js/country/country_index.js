@@ -6,13 +6,13 @@ $(document).ready(function(){
 
 
 var searchButtonClickedEventListener = function() {
-    $(".searchBtn").click(function () {
-        var searchStr = $("#CountryIsoCodeA2").val();
+    $("#searchLink").click(function () {
+        var searchStr = $("#iso_code_a2").val();
 
         if (searchStr == '') {
-            var action = '/hotel/app_admin/country/index';
+            var action = '/app_admin/country/index';
         } else {
-            var action = '/hotel/app_admin/country/index/iso_code_a2:'+searchStr;
+            var action = '/app_admin/country/index/iso_code_a2:'+searchStr;
         }
         $('form')
             .attr('action', action)

@@ -3,29 +3,33 @@ class Country extends AppModel {
 
 	var $name = 'Country';
 	var $validate = array(
-		'iso_code_n' => array('numeric'),
+		'iso_code_n' => array(
+			'numeric' =>
+				array(
+					'rule' => 'numeric',
+					'last' => true,
+				),
+		),
 		'iso_code_a2' => array(
-            'alphanumeric' => array(
-                'rule' => 'alphaNumeric',
-                'required' => true,
-                'message' => 'Alphabets and numbers only'
-             	),
+            'alphaNumeric' => array(
+					'rule' => 'alphanumeric',
+					'last' => true,
+				),
             'length' => array(
 				'rule' => array('custom', '/^[a-zA-Z]{2,2}$/i'),
 				'message' => 'Only letters, 2 characters'
 				)
         ),
 		'iso_code_a3' => array(
-            'alphanumeric' => array(
-                'rule' => 'alphaNumeric',
-                'required' => true,
-                'message' => 'Alphabets and numbers only'
-             	),
+            'alphaNumeric' => array(
+					'rule' => 'alphanumeric',
+					'last' => true,
+				),
             'length' => array(
 				'rule' => array('custom', '/^[a-zA-Z]{3,3}$/i'),
 				'message' => 'Only letters, 3 characters'
 				)
-        ),
+        )
 
 	);
 

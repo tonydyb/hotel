@@ -3,25 +3,120 @@ class HotelAgent extends AppModel {
 
 	var $name = 'HotelAgent';
 	var $validate = array(
-		'name' => array('notempty'),
-		'code' => array('notempty'),
-		'account' => array('notempty'),
-		'password' => array('notempty'),
-		'email' => array('email'),
-		'tel' => array('phone'),
-		'url' => array('url'),
-		'commission' => array('decimal'),
-		'amount' => array('decimal'),
-		'percent' => array('decimal'),
-		'amount_max' => array('decimal'),
-		'percent_max' => array('decimal'),
-		'fax' => array('notempty'),
-		'postcode' => array('postal'),
-		'addr_country_id' => array('numeric'),
-		'addr_1' => array('notempty'),
-		'addr_2' => array('notempty'),
-		'addr_3' => array('notempty')
+		'name' => array(
+			'notEmpty' =>
+				array(
+					'rule' => 'notEmpty',
+					'last' => true,
+				),
+		),
+		'code' => array(
+			'notEmpty' =>
+				array(
+					'rule' => 'notEmpty',
+				),
+		),
+		'account' => array(
+			'notEmpty' =>
+				array(
+					'rule' => 'notEmpty',
+				),
+		),
+		'password' => array(
+			'notEmpty' =>
+				array(
+					'rule' => 'notEmpty',
+				),
+		),
+		'email' => array(
+			'email' =>
+				array(
+					'rule' => 'email',
+				),
+		),
+		'tel' => array(
+			'notEmpty' =>
+				array(
+					'rule' => 'notEmpty',
+				),
+		),
+		'url' => array(
+			'url' =>
+				array(
+					'rule' => 'url',
+				),
+		),
+		'commission' => array(
+			'numeric' =>
+				array(
+					'rule' => 'numeric',
+				),
+		),
+		'amount' => array(
+			'numeric' =>
+				array(
+					'rule' => 'numeric',
+				),
+		),
+		'percent' => array(
+			'numeric' =>
+				array(
+					'rule' => 'numeric',
+				),
+		),
+		'amount_max' => array(
+			'numeric' =>
+				array(
+					'rule' => 'numeric',
+				),
+		),
+		'percent_max' => array(
+			'numeric' =>
+				array(
+					'rule' => 'numeric',
+				),
+		),
+		'fax' => array(
+			'notEmpty' =>
+				array(
+					'rule' => 'notEmpty',
+				),
+		),
+		'postcode' => array(
+			'notEmpty' =>
+				array(
+					'rule' => 'notEmpty',
+				),
+		),
+		'country_id' => array('numeric'),
+		'addr_1' => array(
+			'notEmpty' =>
+				array(
+					'rule' => 'notEmpty',
+				),
+		),
+		'addr_2' => array(
+			'notEmpty' =>
+				array(
+					'rule' => 'notEmpty',
+				),
+		),
+		'addr_3' => array(
+			'notEmpty' =>
+				array(
+					'rule' => 'notEmpty',
+				),
+		)
 	);
 
+	var $belongsTo = array(
+		'Country' => array(
+			'className' => 'Country',
+			'foreignKey' => 'country_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
+		)
+	);
 }
 ?>

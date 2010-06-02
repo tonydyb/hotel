@@ -1,5 +1,5 @@
 <?php
-	echo $javascript->link('jquery-ui-1.8.1.custom.min');
+	echo $javascript->link('discount/jquery-ui-1.8.1.custom.min');
 	echo $javascript->link('discount/discount_index');
 ?>
 
@@ -16,10 +16,11 @@
 	<?php echo $this->renderElement('index_title', array("title" => __('Discount'))); ?>
 	<p id="counter"><?php __("total $count records"); ?></p>
 
+<?php echo $form->create('Discount');?>
 	<div id="list">
 		<table class="listTable">
 		<tr>
-			<th><?php __('sort')?></th>
+			<th><?php __('order');?></th>
 			<th><?php __('name')?></th>
 			<th><?php __('item')?></th>
 			<th><?php __('item value')?></th>
@@ -42,12 +43,14 @@
 							$discount['Discount']['discount_item_val'],
 							$discount['DiscountType']['code'],
 							$discount['Discount']['amount'],
-							$discount['Discount']['start_date'],
-							$discount['Discount']['end_date'],
+							substr($discount['Discount']['start_date'], 0, 10),
+							substr($discount['Discount']['end_date'], 0, 10),
 							array($html->link(__('Edit', true), array('action' => 'edit', $discount['Discount']['id'])), aa('class', 'actions')),
 							array($html->link(__('Delete', true), array('action' => 'delete', $discount['Discount']['id']), array('class' => 'deleteLink'), 'Are you sure?'), aa('class', 'actions'))
 						)
-					)
+					),
+					array('id' => 'sort_' . $discount['Discount']['id']),
+					array('id' => 'sort_' . $discount['Discount']['id'])
 				);
 			}
 		?>
@@ -55,7 +58,11 @@
 		</table>
 		<?php echo $this->renderElement('message'); ?>
 	</div>
-
+<?php
+	echo $html->tag('button', 'Enable sort', array('type' => 'button', 'id' => 'enableSortBtn', 'value' => 0));
+	echo $html->tag('button', 'Apply sort', array('type' => 'button', 'id' => 'submitSortBtn', 'value' => 0, 'disabled' => true));
+?>
+<?php echo $form->end(); ?>
 </div>
 
 	<div style="clear:both"></div>

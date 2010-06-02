@@ -59,7 +59,7 @@ JSPROG
 ?>
 <div id="top">
 	<div id="header">
-		<h1><?php __('申込管理'); ?></h1>
+		<h1><?php echo __('申込管理'); ?></h1>
 		<div><?php echo $this->renderElement('headermenu'); ?></div>
 	</div><!-- header end -->
 	<div id="contents">

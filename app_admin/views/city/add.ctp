@@ -12,41 +12,43 @@
 <?php echo $form->create('City');?>
 	<fieldset class="fieldset">
  		<legend><?php __('Add City');?></legend>
-		<div style="float:left">
-			<label>Country</label>
-			<select id="CountryId" name="CountryId">
-				<?php foreach ($countries as $country) { ?>
-					<option value="<?php echo $country['Country']['id']; ?>"><?php echo (trim($country['CountryLanguage']['name'])=="" ? "no name" : $country['CountryLanguage']['name']); ?></option>
-				<?php } ?>
-			</select>
-		</div>
-		<div class="clear"></div>
-	<?php
-		/*echo $form->input('country_id', array(
-			'label' => __(''),
-			'div'=>'formfield',
-			'error' => array(
-				'wrap' => 'div',
-				'class' => 'formerror'
-				)
-			));
-		echo $form->input('state_id', array(
-			'label' => __(''),
-			'div'=>'formfield',
-			'error' => array(
-				'wrap' => 'div',
-				'class' => 'formerror'
-				)
-			));*/
-		echo $form->input('code', array(
-			'label' => __(''),
-			'div'=>'formfield',
-			'error' => array(
-				'wrap' => 'div',
-				'class' => 'formerror'
-				)
-			));
-	?>
+			<div>
+			<table>
+				<tr>
+					<th style="text-align:left"><label><?php __('Country');?></label></th>
+					<td>
+					<select id="CountryId" name="CountryId">
+						<?php foreach ($countries as $country) { ?>
+							<option value="<?php echo $country['Country']['id']; ?>"><?php echo (trim($country['CountryLanguage']['name'])=="" ? "no name" : $country['CountryLanguage']['name']); ?></option>
+						<?php } ?>
+					</select>
+					</td>
+				</tr>
+				<tr>
+					<th style="text-align:left"><label><?php __('Code');?></label></th>
+					<td>
+					<?php
+						/*echo $form->input('state_id', array(
+						'label' => false,
+						'div'=>'formfield',
+						'error' => array(
+							'wrap' => 'div',
+							'class' => 'formerror'
+							)
+						));*/
+						echo $form->input('code', array(
+							'label' => false,
+							'div'=>'formfield',
+							'error' => array(
+								'wrap' => 'div',
+								'class' => 'formerror'
+							)
+						));
+					?>
+					</td>
+				</tr>
+			</table>
+			</div>
 	</fieldset>
 <?php echo $form->end('Submit');?>
 </div>

@@ -89,7 +89,7 @@ class ContentPageController extends AppController {
 		$this->set('contentLayouts', $this->SelectGetter->getContentLayout());
 
 		if (!$id && empty($this->data)) {
-			$this->Session->setFlash(__('Invalid ContentPage1', true));
+			$this->Session->setFlash(__('Invalid ContentPage', true));
 			$this->redirect(array('action' => 'index'));
 		}
 		//既に削除されたのレコードは編集できません
@@ -170,7 +170,7 @@ class ContentPageController extends AppController {
 		touch($newFileStr);
 
 		if (!empty($_REQUEST["ContentLayoutId"])) {
-			$layout = $this->ContentLayout->find('first', array( 'conditions' => array('ContentLayout.id' => $_REQUEST["ContentLayoutId"]), 'fields' => array('alias', 'language_id', 'carrier_type_id')));
+			$layout = $this->ContentLayout->find('first', array( 'conditions' => array('ContentLayout.id' => $_REQUEST["ContentLayoutId"]), 'fields' => array('alias', 'language_id', 'carrier_type_id', 'meta_keyword', 'meta_description')));
 			$layout_name = $this->getIsoCode($layout['ContentLayout']['language_id']) . "/" . $this->getCarrierCode($layout['ContentLayout']['carrier_type_id']) . "/" . $layout['ContentLayout']['alias'];
 		}
 

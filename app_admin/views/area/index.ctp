@@ -15,41 +15,53 @@
 	<?php echo $this->renderElement('index_title', array("title" => __('Area'))); ?>
 
 	<div id="search">
-		<?php echo $form->create('Area'); ?>
-			<div style="float:left;padding-right:5px;"><?php echo $form->input('code'); ?></div>
-			<div style="float:left;padding-right:5px;"><?php echo $form->button('Search', array('type'=>'button', 'class'=>'searchBtn')); ?></div>
-		<?php echo $form->end(); ?>
+		<table>
+			<tr>
+				<th style="text-align:left"><label><?php __('Code');?></label></th>
+				<td>
+					<?php echo $html->tag('input', null, array('id' => 'code', 'value' => isset($this->passedArgs['code']) ? $this->passedArgs['code']:'')); ?>
+				</td>
+				<td><a href="#" id="searchLink">Search</a></td>
+			</tr>
+		</table>
 	</div>
 	<div class="clear"></div>
 
 	<div id="list">
 		<?php echo $this->renderElement('index_counter'); ?>
 
+		<?php
+			$paginator->options(array('url' => $this->passedArgs));
+
+			$code = 'Code';
+			if ($session->read('view_iso') == 'ja') {
+				$code = 'コード';
+			}
+		?>
 		<table class="listTable">
 		<tr>
-			<th><?php echo $paginator->sort(__('id'));?></th>
-			<th><?php echo $paginator->sort(__('code'));?></th>
-			<th><?php echo $paginator->sort(__('name'));?></th>
+			<th><?php echo $paginator->sort('ID', 'id');?></th>
+			<th><?php echo $paginator->sort($code, 'code');?></th>
+			<th><?php __('Name');?></th>
 			<th class="actions"><?php __('Edit');?></th>
 			<th class="actions"><?php __('Edit Name');?></th>
 			<th class="actions"><?php __('Area Link Country');?></th>
 			<th class="actions"><?php __('Area Link City');?></th>
 			<th class="actions"><?php __('Delete');?></th>
 		</tr>
-
 		<?php
 			foreach($areas as $area) {
 				echo $html->tableCells(
 					array(
 						array(
-							$area['area']['id'],
-							$area['area']['code'],
-							$area['area_language']['name'],
-							array($html->link(__('Edit', true), array('action' => 'edit', $area['area']['id'])), aa('class','actions')),
-							array($html->link(__('Edit Name', true), array('action' => 'editName', $area['area']['id'])), aa('class','actions')),
-							array($html->link(__('Edit Country', true), array('action' => 'editCountry', $area['area']['id'])), aa('class','actions')),
-							array($html->link(__('Edit City', true), array('action' => 'editCity', $area['area']['id'])), aa('class','actions')),
-							array($html->link(__('Delete', true), array('action' => 'delete', $area['area']['id']), array('class' => 'deleteLink'), 'Are you sure?'), aa('class','actions'))
+							$area['Area']['id'],
+							$area['Area']['code'],
+							isset($area['AreaLanguage'][0]['name']) ? $area['AreaLanguage'][0]['name'] : '',
+							array($html->link(__('Edit', true), array('action' => 'edit', $area['Area']['id'])), aa('class','actions')),
+							array($html->link(__('Edit Name', true), array('action' => 'editName', $area['Area']['id'])), aa('class','actions')),
+							array($html->link(__('Edit Country', true), array('action' => 'editCountry', $area['Area']['id'])), aa('class','actions')),
+							array($html->link(__('Edit City', true), array('action' => 'editCity', $area['Area']['id'])), aa('class','actions')),
+							array($html->link(__('Delete', true), array('action' => 'delete', $area['Area']['id']), array('class' => 'deleteLink'), 'Are you sure?'), aa('class','actions'))
 						)
 					)
 				);

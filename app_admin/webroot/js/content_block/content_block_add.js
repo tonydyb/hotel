@@ -3,10 +3,9 @@ $(document).ready(function(){
 	submitButtonClickedEventListener();
 });
 
-
 var submitButtonClickedEventListener = function() {
     $(".submitBtn").click(function () {
-        var action = '/hotel/app_admin/content_block/add';
+        var action = '/app_admin/content_block/add';
 
         $('form')
             .attr('action', action)

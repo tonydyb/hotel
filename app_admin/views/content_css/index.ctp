@@ -1,6 +1,6 @@
 <?php
 	echo $javascript->link('content_css/content_css_index');
-	echo $javascript->link('ajaxupload');
+	echo $javascript->link('content_image/ajaxupload');
 ?>
 
 <div id="top">
@@ -90,7 +90,7 @@
 							($css['ContentCss']['language_id']==0 ? 'Common' : $css['LanguageLanguage']['name']),
 							($css['ContentCss']['carrier_type_id']==1 ? 'PC' : 'Mobile'),
 							$css['ContentCss']['alias'],
-							$html->tag('textarea', "<?php echo \$html->css(\$css_path/" . $css['ContentCss']['alias'] . "); ?>", array('readOnly' => true, 'rows' => '1', 'cols' => '60')),
+							$html->tag('textarea', "<?php echo \$html->css(" . "\"\$css_path/" . basename($css['ContentCss']['alias'], '.css') . "\"); ?>", array('readOnly' => true, 'rows' => '1', 'cols' => '60')),
 							$html->link(__('Delete', true), array('action' => 'delete', $css['ContentCss']['id']), array('class' => 'deleteLink'), 'Are you sure?')
 						)
 					)

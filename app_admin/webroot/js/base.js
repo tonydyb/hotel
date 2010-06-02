@@ -70,3 +70,11 @@ function copy_send_email_address(tgt_mobile) {
 	}
 }
 
+// app_admin/content_document/indexで使用
+function new_window_submit2(formname, target) {
+	var win = window.open("about:blank", "new_window", "WindowStyle");
+	document.forms[formname].target = "new_window";
+	document.forms[formname].action = target;
+	document.forms[formname].submit();
+}
+

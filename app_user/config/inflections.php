@@ -132,6 +132,20 @@
 		'cancel_charge' => 'cancel_charge',
 		'hotel_emergency_contact' => 'hotel_emergency_contact',
 		'hotel_room_link_room_facility' => 'hotel_room_link_room_facility',
+		'area_convert_agent' => 'area_convert_agent',
+		'breakfast_type_convert_agent' => 'breakfast_type_convert_agent',
+		'city_convert_agent' => 'city_convert_agent',
+		'hotel_facility_convert_agent' => 'hotel_facility_convert_agent',
+		'hotel_grade_convert_agent' => 'hotel_grade_convert_agent',
+		'language_convert_agent' => 'language_convert_agent',
+		'location_convert_agent' => 'location_convert_agent',
+		'meal_type_convert_agent' => 'meal_type_convert_agent',
+		'room_bed_convert_agent' => 'room_bed_convert_agent',
+		'room_facility_convert_agent' => 'room_facility_convert_agent',
+		'room_grade_convert_agent' => 'room_grade_convert_agent',
+		'smoking_convert_agent' => 'smoking_convert_agent',
+		'content_document' => 'content_document',
+		'content_document_language' => 'content_document_language',
 
 		// 以下テーブル定義なし
 		'admin' => 'admin',
@@ -139,6 +153,7 @@
 		'view_language' => 'view_language',
 		'condition' => 'condition',
 		'condition2' => 'condition2',
+		'add_content_document' => 'add_content_document',
 	);
 
 /**
